@@ -1,3 +1,3 @@
 export default function NavBar() {
-  return <nav>Nav Page</nav>;
+  return <nav className="flex justify-center">Nav Page</nav>;
 }
