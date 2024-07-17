@@ -1,3 +1,5 @@
 export default function Header() {
-  return <header>Header Page</header>;
+  return (
+    <header className="flex justify-center bg-sky-300">Header Page</header>
+  );
 }
