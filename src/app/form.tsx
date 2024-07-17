@@ -1,17 +1,24 @@
 "use client";
-// import { addEvents } from "@/actions/event";
+import { addEvents } from "@/actions/event";
 
 export default function Form() {
   return (
     <>
       <p>Client component</p>
-      <form>
+      <form action={addEvents}>
         <label>Form</label>
         <input
           type="text"
-          name="item"
+          name="title"
           className="m-1"
-          placeholder="Write the item..."
+          placeholder="Write the title..."
+          required
+        />
+        <input
+          type="text"
+          name="body"
+          className="m-1"
+          placeholder="Write the body..."
           required
         />
         <button type="submit">Add</button>
