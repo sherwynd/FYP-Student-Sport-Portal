@@ -4,6 +4,7 @@ export default function NavBar() {
       {[
         ["Home", "/"],
         ["Event", "/event"],
+        ["Profile", "/profile"],
       ].map(([title, url]) => (
         <a
           key={url}
