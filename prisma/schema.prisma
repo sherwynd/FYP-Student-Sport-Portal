@@ -8,23 +8,51 @@ generator client {
 }
 
 model User {
-    id       String @id @default(auto()) @map("_id") @db.ObjectId
-    username String @unique
-    slug     String @unique
-    refId    String @unique @default(uuid())
-    email    String @unique
-    password String
-    // template Template[]
+    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    fullName       String   @unique
+    slug           String   @unique
+    refId          String   @unique @default(uuid())
+    email          String   @unique
+    password       String
+    age            Int?
+    gender         String?
+    image          String?
+    authProviderId String?
+    activeStatus   String   @default("inactive")
+    role           String   @default("admin")
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    event          Event[]
+    health         Health[]
 }
 
-model Template {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    slug      String   @unique
-    refId     String   @unique @default(uuid())
-    title     String
-    body      String
-    // user      User     @relation(fields: [userId], references: [refId])
-    // userId    String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Event {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    slug        String   @unique
+    refId       String   @unique @default(uuid())
+    title       String
+    description String
+    courseLevel String
+    creditHour  Int
+    certificate String[]
+    status      String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    User        User?    @relation(fields: [userId], references: [id])
+    userId      String?  @db.ObjectId
+}
+
+model Health {
+    id            String   @id @default(auto()) @map("_id") @db.ObjectId
+    slug          String   @unique
+    refId         String   @unique @default(uuid())
+    heartRate     String
+    breathingRate String
+    courseLevel   String
+    creditHour    Int
+    certificate   String[]
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    User          User?    @relation(fields: [userId], references: [id])
+    userId        String?  @db.ObjectId
 }

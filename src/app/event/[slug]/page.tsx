@@ -6,7 +6,7 @@ type TParams = {
   };
 };
 export default async function EventId({ params }: TParams) {
-  const eventIdData = await prisma.template.findUnique({
+  const eventIdData = await prisma.event.findUnique({
     where: {
       slug: params.slug,
     },
@@ -15,7 +15,7 @@ export default async function EventId({ params }: TParams) {
     <main>
       Event ID Page is
       <p>{eventIdData?.title}</p>
-      <p>{eventIdData?.body}</p>
+      <p>{eventIdData?.description}</p>
     </main>
   );
 }

@@ -1,27 +1,14 @@
 import React from "react";
-import Link from "next/link";
+// import Link from "next/link";
 
-import prisma from "@/databases/db";
-import Form from "./form";
-
-type DataItem = {
-  id: string;
-  slug: string;
-  title: string;
-};
+// import prisma from "@/databases/db";
+import EventCard from "@/components/eventCard";
 
 export default async function Home() {
-  const data = await prisma.template.findMany();
-
   return (
     <main>
-      <Form />
-      <ul className="ml-8">
-        {data.map((data: DataItem, index: number) => (
-          <Link href={`event/${data.slug}`} key={index}>
-            {data.title}
-          </Link>
-        ))}
+      <ul className="event-grid sm:grid-flow-cols-1 grid gap-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <EventCard />
       </ul>
     </main>
   );

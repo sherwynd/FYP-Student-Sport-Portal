@@ -3,20 +3,21 @@ import prisma from "@/databases/db";
 import { revalidatePath } from "next/cache";
 
 export const addEvents = async (formData: FormData) => {
-  await prisma.template.create({
-    data: {
-      title: formData.get("title") as string,
-      slug: (formData.get("title") as string)
-        .replace(/\s+/g, "-")
-        .toLowerCase(),
-      body: formData.get("body") as string,
-    },
-  });
+  console.log(formData);
+  // await prisma.event.create({
+  //   data: {
+  //     title: formData.get("title") as string,
+  //     slug: (formData.get("title") as string)
+  //       .replace(/\s+/g, "-")
+  //       .toLowerCase(),
+  //     description: formData.get("description") as string,
+  //   },
+  // });
   revalidatePath("/");
 };
 
 export const editEvents = async (formData: FormData, id: string) => {
-  await prisma.template.update({
+  await prisma.event.update({
     where: {
       id: id,
     },
@@ -25,13 +26,13 @@ export const editEvents = async (formData: FormData, id: string) => {
       slug: (formData.get("title") as string)
         .replace(/\s+/g, "-")
         .toLowerCase(),
-      body: formData.get("body") as string,
+      description: formData.get("description") as string,
     },
   });
 };
 
 export const deleteEvents = async (id: string) => {
-  await prisma.template.delete({
+  await prisma.event.delete({
     where: {
       id: id,
     },
