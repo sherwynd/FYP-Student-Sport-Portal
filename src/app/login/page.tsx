@@ -1,13 +1,22 @@
-import { login, google } from "@/actions/user";
+// import { login, google } from "@/actions/user";
+// import { auth } from "@/auth";
+// import { redirect } from "next/navigation";
 
 export default async function Login() {
+  // const session = await auth();
+  // const user = session?.user;
+  // if (user) {
+  //   redirect("/");
+  // }
   return (
     <>
-      <form action={login}>
+      <form
+      // action={login}
+      >
         <div className="email-box">
           <label>Email</label>
           <input
-            type="text"
+            type="email"
             id="email"
             name="email"
             placeholder="Enter Email"
@@ -24,7 +33,9 @@ export default async function Login() {
         </div>
         <button type="submit">Login</button>
       </form>
-      <form action={google}>
+      <form
+      // action={google}
+      >
         <button type="submit">Google</button>
       </form>
     </>
