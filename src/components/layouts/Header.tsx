@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="grid gap-4 bg-sky-300 md:grid-cols-3">
+    <header className="grid items-center gap-4 bg-sky-300 md:grid-cols-3">
       <Image
         src="/HeaderLogo.png"
         width={80}
@@ -10,7 +10,7 @@ export default function Header() {
         alt=""
         className="m-2"
       />
-      <h1 className="">Student Sport Portal</h1>
+      <h1 className="title-name text-center text-2xl">Student Sport Portal</h1>
     </header>
   );
 }
