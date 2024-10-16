@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import MainLayout from "@/components/layouts/MainLayout";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 
 //import from file
 
@@ -23,7 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.className} antialiased`}>
-        <MainLayout>{children}</MainLayout>
+        <ChakraProvider>
+          <MainLayout>
+            <Box bg="gray.200">{children}</Box>
+          </MainLayout>
+        </ChakraProvider>
       </body>
     </html>
   );
