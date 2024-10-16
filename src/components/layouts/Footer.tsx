@@ -1,11 +1,26 @@
+import { Flex, Link } from "@chakra-ui/react";
+import NextLink from "next/link";
+
 export default function Footer() {
   return (
-    <footer className="flex justify-center bg-stone-900 p-3">
-      <ul className="text-neutral-50">
-        <li>Privacy</li>
-        <li>Terms</li>
-      </ul>
-      <p className="text-neutral-50">Footer </p>
+    <footer>
+      <Flex
+        className="top-navigation-section"
+        color="white"
+        alignItems="center"
+        bg="black"
+        minHeight="40px"
+        justify="center"
+      >
+        {[
+          ["Privacy", "/"],
+          ["Term", "/"],
+        ].map(([title, url]) => (
+          <Link as={NextLink} px={3} py={2} href={url}>
+            {title}
+          </Link>
+        ))}
+      </Flex>
     </footer>
   );
 }
