@@ -1,11 +1,11 @@
 //import from package.json
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import "./globals.css";
 import MainLayout from "@/components/layouts/MainLayout";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 
 //import from file
+import "./globals.css";
 
 //Text Font
 const roboto = Roboto({ subsets: ["latin"], weight: "400" });
