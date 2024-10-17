@@ -1,5 +1,6 @@
 import EventCard from "@/components/event/EventCard";
 import prisma from "@/databases/db";
+import { Button, Grid } from "@chakra-ui/react";
 import Link from "next/link";
 
 type TEvent = {
@@ -22,13 +23,22 @@ export default async function Event() {
 
   return (
     <main className="mx-4">
-      <h2>Hello Event</h2>
-      <Link href={`event/createEvent`}>Create Event</Link>
-      <div className="event-list grid justify-items-center gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <Link href={`event/createEvent`}>
+        <Button margin={2}>Create Event</Button>
+      </Link>
+      <Grid
+        templateColumns={{
+          base: "repeat(1, 1fr)",
+          sm: "repeat(2, 1fr)",
+          md: "repeat(3, 1fr)",
+          lg: "repeat(4, 1fr)",
+        }}
+        gap={2}
+      >
         {eventData.map((data: TEvent) => (
           <EventCard event={data} key={data.id} />
         ))}
-      </div>
+      </Grid>
     </main>
   );
 }
