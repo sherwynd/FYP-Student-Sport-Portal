@@ -21,7 +21,7 @@ export default function NavBar() {
           ["Login", "/login"],
           ["Register", "/register"],
         ].map(([title, url]) => (
-          <Link as={NextLink} px={3} py={2} href={url}>
+          <Link key={url} as={NextLink} px={3} py={2} href={url}>
             {title}
           </Link>
         ))}
