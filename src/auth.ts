@@ -61,7 +61,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!MatchedPassword) throw new Error("Incorrect Password");
 
         const userData = {
-          fullName: findUser.fullName,
+          fullName: findUser.name,
           slug: findUser.slug,
           refId: findUser.refId,
           email: findUser.email,

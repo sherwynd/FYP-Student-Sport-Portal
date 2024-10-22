@@ -1,6 +1,15 @@
-// import { login, google } from "@/actions/user";
+import { login } from "@/actions/auth/loginAction";
 // import { auth } from "@/auth";
 // import { redirect } from "next/navigation";
+
+import {
+  Box,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Input,
+} from "@chakra-ui/react";
 
 export default async function Login() {
   // const session = await auth();
@@ -10,10 +19,8 @@ export default async function Login() {
   // }
   return (
     <>
-      <form
-      // action={login}
-      >
-        <div className="email-box">
+      <form action={login}>
+        <Box className="password-box">
           <label>Email</label>
           <input
             type="email"
@@ -21,8 +28,6 @@ export default async function Login() {
             name="email"
             placeholder="Enter Email"
           />
-        </div>
-        <div className="password-box">
           <label>Password</label>
           <input
             type="password"
@@ -30,7 +35,7 @@ export default async function Login() {
             name="password"
             placeholder="Enter Password"
           />
-        </div>
+        </Box>
         <button type="submit">Login</button>
       </form>
       <form

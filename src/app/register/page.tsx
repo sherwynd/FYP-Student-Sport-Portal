@@ -1,4 +1,4 @@
-import { register } from "@/actions/user";
+import { register } from "@/actions/auth/registerAction";
 
 export default async function Register() {
   return (
@@ -7,8 +7,8 @@ export default async function Register() {
         <label>Full Name</label>
         <input
           type="text"
-          id="fullname"
-          name="fullName"
+          id="name"
+          name="name"
           placeholder="Enter Full Name"
         />
       </div>
