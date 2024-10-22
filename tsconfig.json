@@ -24,7 +24,10 @@
       "@/*": ["./src/*"],
       "@actions/*": ["./src/actions/*"],
       "@components/*": ["./src/components/*"],
-      "@databases/*": ["./src/databases/*"]
+      "@constants/*": ["./src/constants/*"],
+      "@databases/*": ["./src/databases/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@schemas/*": ["./src/schemas/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
