@@ -16,7 +16,7 @@ export default function Footer() {
           ["Privacy", "/"],
           ["Term", "/"],
         ].map(([title, url]) => (
-          <Link key={url} as={NextLink} px={3} py={2} href={url}>
+          <Link key={title} as={NextLink} px={3} py={2} href={url}>
             {title}
           </Link>
         ))}

@@ -17,6 +17,7 @@ export default function Header() {
           height={80}
           alt=""
           className="m-2"
+          priority={true}
         />
         <Spacer />
         <Text fontSize="xl" display={{ base: "none", sm: "block" }}>
