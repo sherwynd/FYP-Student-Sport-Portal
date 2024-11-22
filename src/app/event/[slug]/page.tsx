@@ -1,14 +1,12 @@
 import prisma from "@/databases/db";
 
 type TParams = {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
 };
 export default async function EventId({ params }: TParams) {
   const eventIdData = await prisma.event.findUnique({
     where: {
-      slug: params.slug,
+      slug: (await params).slug,
     },
   });
   return (
@@ -16,6 +14,7 @@ export default async function EventId({ params }: TParams) {
       Event ID Page is
       <p>{eventIdData?.title}</p>
       <p>{eventIdData?.description}</p>
+      <p>{eventIdData?.certificate}</p>
     </main>
   );
 }

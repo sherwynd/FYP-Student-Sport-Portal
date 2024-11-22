@@ -41,7 +41,7 @@ export default function EventForm() {
             <label className="mb-2 block text-base">Event Credit Hours</label>
             <input
               type="text"
-              name="creditHours"
+              name="creditHour"
               className="w-full border px-2 py-1 text-base focus:border-gray-600 focus:outline-none focus:ring-0"
               placeholder="Write the Credit Hours..."
               required
