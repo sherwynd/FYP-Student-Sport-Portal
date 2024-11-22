@@ -56,7 +56,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (!findUser) throw new CredentialsSignin("User is not found");
 
-        const MatchedPassword = await compare(password, findUser.password);
+        if (!findUser.password) {
+          throw new CredentialsSignin("User password is not set");
+        }
+
+        const MatchedPassword = compare(password, findUser.password);
 
         if (!MatchedPassword) throw new Error("Incorrect Password");
 
@@ -109,7 +113,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: async ({ user, account }) => {
       if (account?.provider === "google") {
         try {
-          const { email, name, image, id } = user;
+          const { email } = user;
           const existUser = await prisma.user.findUnique({
             where: {
               email: email as string,
