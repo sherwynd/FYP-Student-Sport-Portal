@@ -1,5 +1,5 @@
-import Form from "@/app/form";
+import EventForm from "@/components/event/EventForm";
 
-export default function createEvent() {
-  return <Form />;
+export default function CreateEvent() {
+  return <EventForm />;
 }
