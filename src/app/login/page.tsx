@@ -2,14 +2,7 @@ import { login } from "@/actions/auth/loginAction";
 // import { auth } from "@/auth";
 // import { redirect } from "next/navigation";
 
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-  Input,
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 export default async function Login() {
   // const session = await auth();
