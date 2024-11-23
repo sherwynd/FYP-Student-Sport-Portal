@@ -3,7 +3,7 @@ import { addEvents } from "@/actions/event";
 
 export default function EventForm() {
   return (
-    <div className="flex h-screen items-center justify-center bg-yellow-50">
+    <div className="flex h-screen items-center justify-center">
       <div className="w-96 rounded-md bg-white p-6 shadow-lg">
         <h1 className="block text-center text-3xl font-semibold">Event Form</h1>
         <form action={addEvents}>
