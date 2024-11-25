@@ -1,31 +1,28 @@
-import { Flex, Link } from "@chakra-ui/react";
-import NextLink from "next/link";
+import Link from "next/link";
 
 export default function NavBar() {
+  const links = [
+    { title: "Home", url: "/" },
+    { title: "Event", url: "/event" },
+    { title: "Profile", url: "/profile" },
+    { title: "Admin", url: "/admin" },
+    { title: "Login", url: "/login" },
+    { title: "Register", url: "/register" },
+  ];
+
   return (
-    <nav>
-      <Flex
-        className="top-navigation-section"
-        color="white"
-        alignItems="center"
-        bg="black"
-        height="40px"
-        justify="center"
-        display={{ base: "none", sm: "flex" }}
-      >
-        {[
-          ["Home", "/"],
-          ["Event", "/event"],
-          ["Profile", "/profile"],
-          ["Admin", "/admin"],
-          ["Login", "/login"],
-          ["Register", "/register"],
-        ].map(([title, url]) => (
-          <Link key={url} as={NextLink} px={3} py={2} href={url}>
+    <nav className="flex min-h-[40px] items-center justify-center bg-black text-white">
+      <div className="flex space-x-4">
+        {links.map(({ title, url }, index) => (
+          <Link
+            key={index}
+            href={url}
+            className="px-3 py-2 transition hover:text-gray-400"
+          >
             {title}
           </Link>
         ))}
-      </Flex>
+      </div>
     </nav>
   );
 }

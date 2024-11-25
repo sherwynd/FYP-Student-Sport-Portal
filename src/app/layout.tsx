@@ -2,7 +2,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import MainLayout from "@/components/layouts/MainLayout";
-import { ChakraProvider } from "@chakra-ui/react";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@providers/SessionProvider";
 
@@ -28,13 +27,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.className} antialiased`}>
-        <ChakraProvider>
-          <SessionProvider session={session}>
-            <MainLayout>
-              <div className="bg-gray-100">{children}</div>
-            </MainLayout>
-          </SessionProvider>
-        </ChakraProvider>
+        <SessionProvider session={session}>
+          <MainLayout>
+            <div className="bg-gray-100">{children}</div>
+          </MainLayout>
+        </SessionProvider>
       </body>
     </html>
   );

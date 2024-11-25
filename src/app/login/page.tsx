@@ -2,8 +2,6 @@ import { login } from "@/actions/auth/loginAction";
 // import { auth } from "@/auth";
 // import { redirect } from "next/navigation";
 
-import { Box } from "@chakra-ui/react";
-
 export default async function Login() {
   // const session = await auth();
   // const user = session?.user;
@@ -13,7 +11,7 @@ export default async function Login() {
   return (
     <>
       <form action={login}>
-        <Box className="password-box">
+        <div className="password-box">
           <label>Email</label>
           <input
             type="email"
@@ -28,7 +26,7 @@ export default async function Login() {
             name="password"
             placeholder="Enter Password"
           />
-        </Box>
+        </div>
         <button type="submit">Login</button>
       </form>
       <form

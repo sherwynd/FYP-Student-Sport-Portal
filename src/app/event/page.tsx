@@ -1,7 +1,6 @@
+import Link from "next/link";
 import EventCard from "@/components/event/EventCard";
 import prisma from "@/databases/db";
-import { Button, Grid } from "@chakra-ui/react";
-import Link from "next/link";
 
 type TEvent = {
   id: string;
@@ -24,23 +23,15 @@ export default async function Event() {
   return (
     <main className="flex flex-col items-center justify-center px-4 py-6">
       <Link href={`event/createEvent`}>
-        <Button margin={2}>Create Event</Button>
+        <button className="mb-4 rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600">
+          Create Event
+        </button>
       </Link>
-      <div className="mx-auto w-full max-w-[1440px] px-4 py-4">
-        <Grid
-          templateColumns={{
-            base: "repeat(1, 1fr)",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(3, 1fr)",
-            lg: "repeat(4, 1fr)",
-          }}
-          gap={6} // Space between grid items
-        >
-          {/* Map Events */}
-          {eventData.map((data: TEvent) => (
-            <EventCard event={data} key={data.id} />
-          ))}
-        </Grid>
+      <div className="mx-auto grid w-full max-w-[1440px] gap-6 px-4 py-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {/* Map Events */}
+        {eventData.map((data: TEvent) => (
+          <EventCard event={data} key={data.id} />
+        ))}
       </div>
     </main>
   );

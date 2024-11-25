@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Card, CardBody, Heading, Stack, Text } from "@chakra-ui/react";
 
 type EventCardProps = {
   event: {
@@ -22,23 +21,26 @@ type EventCardProps = {
 export default function EventCard({ event }: EventCardProps) {
   return (
     <>
-      <Card maxW="sm">
+      <div className="max-w-sm overflow-hidden rounded-lg bg-white shadow-lg">
         <Link href={`event/${event.slug}`}>
-          <CardBody>
+          <div>
             <Image
               src="/test-event-image.jpg"
               width={800}
               height={200}
               alt="Picture of the event image"
+              className="h-48 w-full object-cover"
             />
-            <Stack mt="6" spacing="3">
-              <Heading size="md">{event.title}</Heading>
-              <Text fontSize="md">{event.description}</Text>
-              <Text fontSize="sm">Credit Hour : {event.creditHour}</Text>
-            </Stack>
-          </CardBody>
+            <div className="p-6">
+              <h2 className="mb-2 text-lg font-bold">{event.title}</h2>
+              <p className="mb-4 text-sm text-gray-700">{event.description}</p>
+              <p className="text-sm text-gray-500">
+                Credit Hour: {event.creditHour}
+              </p>
+            </div>
+          </div>
         </Link>
-      </Card>
+      </div>
     </>
   );
 }

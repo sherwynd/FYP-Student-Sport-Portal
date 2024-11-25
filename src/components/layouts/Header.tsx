@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Button, Flex, Spacer, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { options } from "@api/auth/[...nextauth]/options";
@@ -10,7 +9,7 @@ export default async function Header() {
     <header className="w-full bg-blue-300">
       {/* Wrapper for 1440px constraint */}
       <div className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-2">
-        <Flex alignItems="center">
+        <div className="flex items-center">
           <Image
             src="/HeaderLogo.png"
             width={80}
@@ -19,23 +18,19 @@ export default async function Header() {
             className="m-2"
             priority={true}
           />
-          <Spacer />
-        </Flex>
-        <Text fontSize="xl" fontWeight="bold">
-          Student Sport Portal
-        </Text>
-        <Spacer />
-        {session ? (
-          <Text fontSize="xl" fontWeight="bold">
-            Admin Mode
-          </Text>
-        ) : (
-          <Link href="/login">
-            <Button margin={{ base: "10px", sm: "20px", md: "30px" }}>
-              Login
-            </Button>
-          </Link>
-        )}
+          <h1 className="text-xl font-bold">Student Sport Portal</h1>
+        </div>
+        <div className="flex items-center space-x-4">
+          {session ? (
+            <h2 className="text-xl font-bold">Admin Mode</h2>
+          ) : (
+            <Link href="/login">
+              <button className="rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600">
+                Login
+              </button>
+            </Link>
+          )}
+        </div>
       </div>
     </header>
   );
