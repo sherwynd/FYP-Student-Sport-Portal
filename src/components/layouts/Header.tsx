@@ -1,8 +1,11 @@
 import Image from "next/image";
 import { Button, Flex, Spacer, Text } from "@chakra-ui/react";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { options } from "@api/auth/[...nextauth]/options";
 
-export default function Header() {
+export default async function Header() {
+  const session = await getServerSession(options);
   return (
     <header className="w-full bg-blue-300">
       {/* Wrapper for 1440px constraint */}
@@ -22,11 +25,17 @@ export default function Header() {
           Student Sport Portal
         </Text>
         <Spacer />
-        <Link href="/login">
-          <Button margin={{ base: "10px", sm: "20px", md: "30px" }}>
-            Login
-          </Button>
-        </Link>
+        {session ? (
+          <Text fontSize="xl" fontWeight="bold">
+            Admin Mode
+          </Text>
+        ) : (
+          <Link href="/login">
+            <Button margin={{ base: "10px", sm: "20px", md: "30px" }}>
+              Login
+            </Button>
+          </Link>
+        )}
       </div>
     </header>
   );
