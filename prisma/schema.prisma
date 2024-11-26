@@ -16,15 +16,15 @@ model User {
     emailVerified      DateTime?
     password           String?
     image              String?
-    accounts           Account[]
     age                Int?
     gender             String?
     authProviderId     String?
-    activeStatus       String              @default("inactive")
-    role               String              @default("admin")
+    activeStatus       String?             @default("inactive")
+    role               String?             @default("admin")
     createdAt          DateTime            @default(now())
     updatedAt          DateTime            @updatedAt
     // event          Event[]
+    accounts           Account[]
     health             Health[]
     eventRegistrations EventRegistration[] // Relation to track event registrations
     sessions           Session[]
