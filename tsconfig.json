@@ -45,6 +45,12 @@
       ],
       "@schemas/*": [
         "./src/schemas/*"
+      ],
+      "@providers/*": [
+        "./src/providers/*"
+      ],
+      "@api/*": [
+        "./src/app/api/*"
       ]
     },
     "target": "ES2017"

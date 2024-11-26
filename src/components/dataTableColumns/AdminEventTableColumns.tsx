@@ -17,7 +17,7 @@ import {
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type AdminEvent = {
+export type AdminEventData = {
   id: string;
   slug: string;
   title: string;
@@ -30,7 +30,7 @@ export type AdminEvent = {
   //   email: string;
 };
 
-export const AdminEventDataColumns: ColumnDef<AdminEvent>[] = [
+export const AdminEventDataColumns: ColumnDef<AdminEventData>[] = [
   // Row Selection
   {
     id: "select",
