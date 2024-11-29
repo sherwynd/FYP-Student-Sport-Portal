@@ -1,9 +1,21 @@
 "use client";
 import { useState } from "react";
 
-import { addEvent } from "@/actions/eventAction";
+import { addEvent, editEvent } from "@/actions/eventAction";
 
-export default function EventForm() {
+type EventFormProps = {
+  actionType: "Create" | "Edit";
+  initialData?: {
+    id: string;
+    title: string;
+    description: string;
+    courseLevel: string;
+    creditHour: number;
+    certificate: string;
+  };
+};
+
+const EventForm = ({ actionType, initialData }: EventFormProps) => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
@@ -17,7 +29,6 @@ export default function EventForm() {
   };
 
   const handleDelete = () => {
-    console.log("Image removed");
     setImageFile(null);
     setPreviewUrl(null);
   };
@@ -33,10 +44,17 @@ export default function EventForm() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-lg rounded-lg bg-white p-8 shadow-md">
-        <h2 className="mb-4 text-center text-2xl font-semibold">Event Form</h2>
+        <h2 className="mb-4 text-center text-2xl font-semibold">
+          {actionType} Event Form
+        </h2>
         <form
           className="space-y-2"
-          action={(formData) => addEvent(formData, imageFile)}
+          action={
+            actionType === "Create"
+              ? (formData) => addEvent(formData, imageFile)
+              : (formData) =>
+                  editEvent(formData, imageFile, initialData?.id ?? "")
+          }
         >
           {/* Drag and Drop Section */}
           <div
@@ -64,12 +82,33 @@ export default function EventForm() {
                 Drag and drop an image here, or click to upload.
                 <input
                   type="file"
+                  name="eventImage"
                   accept="image/*"
                   onChange={handleFileChange}
                   className="absolute h-full w-full opacity-0"
                 />
               </label>
             )}
+          </div>
+
+          <div className="mt-4 flex justify-center">
+            <button
+              type="button"
+              onClick={() =>
+                document.getElementById("fileUploadInput")?.click()
+              }
+              className="rounded-lg bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              Upload File
+            </button>
+            <input
+              type="file"
+              id="fileUploadInput"
+              name="eventImage"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+            />
           </div>
 
           {/* Event Title */}
@@ -85,6 +124,7 @@ export default function EventForm() {
               name="title"
               placeholder="Write the title..."
               required
+              defaultValue={initialData?.title ?? ""}
               className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -101,8 +141,9 @@ export default function EventForm() {
               name="description"
               placeholder="Write the description..."
               rows={3}
-              className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              defaultValue={initialData?.description ?? ""}
+              className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
           </div>
 
@@ -118,8 +159,9 @@ export default function EventForm() {
               type="text"
               name="courseLevel"
               placeholder="Write the course level..."
-              className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              defaultValue={initialData?.courseLevel ?? ""}
+              className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -127,16 +169,17 @@ export default function EventForm() {
           <div>
             <label
               className="mb-1 block text-sm font-medium text-gray-700"
-              htmlFor="creditHours"
+              htmlFor="creditHour"
             >
               Event Credit Hours
             </label>
             <input
               type="number"
-              name="creditHours"
+              name="creditHour"
               placeholder="Write the credit hours..."
-              className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
+              defaultValue={initialData?.creditHour ?? ""}
+              className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -153,6 +196,7 @@ export default function EventForm() {
               name="certificate"
               placeholder="Write the certificate..."
               required
+              defaultValue={initialData?.certificate ?? ""}
               className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
@@ -170,4 +214,6 @@ export default function EventForm() {
       </div>
     </div>
   );
-}
+};
+
+export default EventForm;
