@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React, { useState } from "react";
 
 export default function DragAndDropEventImage({
@@ -43,7 +44,7 @@ export default function DragAndDropEventImage({
       >
         {previewUrl ? (
           <div className="relative h-full w-full">
-            <img
+            <Image
               src={previewUrl}
               alt="Preview"
               className="h-full w-full rounded-lg object-cover"
