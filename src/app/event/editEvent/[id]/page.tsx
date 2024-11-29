@@ -1,11 +1,14 @@
 import EventForm from "@/components/event/EventForm";
 import prisma from "@/databases/db";
 
-const EditEvent = async ({ params }: { params: { id: string } }) => {
-  const { id } = await params;
+type ParamProps = {
+  params: Promise<{ id: string }>;
+};
+
+const EditEvent = async ({ params }: ParamProps) => {
   const eventIdData = await prisma.event.findUnique({
     where: {
-      id: id,
+      id: (await params).id,
     },
   });
 

@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 import { addEvent, editEvent } from "@/actions/eventAction";
+import Image from "next/image";
 
 type EventFormProps = {
   actionType: "Create" | "Edit";
@@ -64,7 +65,7 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
           >
             {previewUrl ? (
               <div className="relative h-full w-full">
-                <img
+                <Image
                   src={previewUrl}
                   alt="Preview"
                   className="h-full w-full rounded-lg object-cover"
