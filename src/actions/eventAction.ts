@@ -11,7 +11,7 @@ export const addEvent = async (formData: FormData, imageFile: File | null) => {
     courseLevel: string;
     creditHour: number;
     certificate: string;
-    imageId: string | null;
+    eventImageId: string | null;
   } = {
     title: formData.get("title") as string,
     slug: (formData.get("title") as string).replace(/\s+/g, "-").toLowerCase(),
@@ -19,7 +19,7 @@ export const addEvent = async (formData: FormData, imageFile: File | null) => {
     courseLevel: formData.get("courseLevel") as string,
     creditHour: Number(formData.get("creditHour")),
     certificate: formData.get("certificate") as string,
-    imageId: null,
+    eventImageId: null,
   };
 
   let imageRecord = null;
@@ -28,7 +28,7 @@ export const addEvent = async (formData: FormData, imageFile: File | null) => {
     try {
       const imageBuffer = await convertImageToBuffer(imageFile);
 
-      imageRecord = await prisma.image.create({
+      imageRecord = await prisma.eventImage.create({
         data: {
           filename: imageFile.name,
           contentType: imageFile.type,
@@ -36,7 +36,7 @@ export const addEvent = async (formData: FormData, imageFile: File | null) => {
         },
       });
 
-      eventData.imageId = imageRecord.id;
+      eventData.eventImageId = imageRecord.id;
     } catch (error) {
       console.error("Error uploading image:", error);
       throw new Error("Failed to upload image.");
@@ -62,7 +62,7 @@ export const editEvent = async (
 ) => {
   const existingEvent = await prisma.event.findUnique({
     where: { id: eventId },
-    include: { image: true },
+    include: { eventImage: true },
   });
 
   if (!existingEvent) {
@@ -76,7 +76,7 @@ export const editEvent = async (
     courseLevel: string;
     creditHour: number;
     certificate: string;
-    imageId: string | null;
+    eventImageId: string | null;
   } = {
     title: formData.get("title") as string,
     slug: (formData.get("title") as string).replace(/\s+/g, "-").toLowerCase(),
@@ -84,7 +84,7 @@ export const editEvent = async (
     courseLevel: formData.get("courseLevel") as string,
     creditHour: Number(formData.get("creditHour")),
     certificate: formData.get("certificate") as string,
-    imageId: existingEvent.imageId,
+    eventImageId: existingEvent.eventImageId,
   };
 
   let imageRecord = null;
@@ -93,13 +93,13 @@ export const editEvent = async (
     try {
       const imageBuffer = await convertImageToBuffer(imageFile);
 
-      if (existingEvent.imageId) {
-        await prisma.image.delete({
-          where: { id: existingEvent.imageId },
+      if (existingEvent.eventImageId) {
+        await prisma.eventImage.delete({
+          where: { id: existingEvent.eventImageId },
         });
       }
 
-      imageRecord = await prisma.image.create({
+      imageRecord = await prisma.eventImage.create({
         data: {
           filename: imageFile.name,
           contentType: imageFile.type,
@@ -107,7 +107,7 @@ export const editEvent = async (
         },
       });
 
-      eventData.imageId = imageRecord.id;
+      eventData.eventImageId = imageRecord.id;
     } catch (error) {
       console.error("Error uploading image:", error);
       throw new Error("Failed to upload image.");
@@ -130,17 +130,17 @@ export const editEvent = async (
 export const deleteEvent = async (eventId: string) => {
   const event = await prisma.event.findUnique({
     where: { id: eventId },
-    include: { image: true },
+    include: { eventImage: true },
   });
 
   if (!event) {
     throw new Error("Event not found.");
   }
 
-  if (event.imageId) {
+  if (event.eventImageId) {
     try {
-      await prisma.image.delete({
-        where: { id: event.imageId },
+      await prisma.eventImage.delete({
+        where: { id: event.eventImageId },
       });
     } catch (error) {
       console.error("Error deleting image:", error);
