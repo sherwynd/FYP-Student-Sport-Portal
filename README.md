@@ -14,10 +14,6 @@ pnpm dev
 bun dev
 ```
 
-NOTE : All comments are from next-auth issues will be fixed later onwards
-    "next-auth": "^5.0.0-beta.19",
-    "@auth/prisma-adapter": "^2.4.1",
-
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

@@ -3,12 +3,15 @@ import prisma from "@/databases/db";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteAlertBox from "@/components/common/DeleteAlertBox";
+import { verifySession } from "@/libs/dal";
 
 type ParamProps = {
   params: Promise<{ slug: string }>;
 };
 
 const EventId = async ({ params }: ParamProps) => {
+  const currentUser = await verifySession();
+
   const eventIdData = await await prisma.event.findUnique({
     where: {
       slug: (await params).slug,
@@ -64,7 +67,7 @@ const EventId = async ({ params }: ParamProps) => {
           <p className="text-gray-600">{eventIdData?.courseLevel || "N/A"}</p>
         </div>
       </div>
-      {/* {session?.user?.role === "admin" && (
+      {currentUser?.role === "admin" && (
         <>
           <Link href={`/event/editEvent/${eventIdData?.id}`}>
             <button className="mb-4 rounded bg-green-500 px-4 py-2 text-white transition hover:bg-green-600">
@@ -73,7 +76,7 @@ const EventId = async ({ params }: ParamProps) => {
           </Link>
           <DeleteAlertBox id={eventIdData?.id as string} />
         </>
-      )} */}
+      )}
     </section>
   );
 };

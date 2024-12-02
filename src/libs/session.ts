@@ -22,14 +22,10 @@ export async function encrypt(payload: { userId: string; expiresAt: Date }) {
 
 export async function decrypt(session: string | undefined = "") {
   if (!session) return null;
-  try {
-    const { payload } = await jwtVerify(session, encodedKey, {
-      algorithms: ["HS256"],
-    });
-    return payload;
-  } catch (error) {
-    console.log("Failed to verify session");
-  }
+  const { payload } = await jwtVerify(session, encodedKey, {
+    algorithms: ["HS256"],
+  });
+  return payload;
 }
 
 export async function createSession(
@@ -60,7 +56,7 @@ export async function createSession(
   });
 }
 
-export async function updateSession() {
+export async function updateSession(): Promise<void | null> {
   const session = (await cookies()).get("session")?.value;
   const payload = await decrypt(session);
 
