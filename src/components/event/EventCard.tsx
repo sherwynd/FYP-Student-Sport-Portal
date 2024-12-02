@@ -10,7 +10,7 @@ type EventCardProps = {
     courseLevel: string;
     creditHour: number;
     certificate: string;
-    image: { filename: string; contentType: string; data: Buffer } | null;
+    eventImage: { filename: string; contentType: string; data: Buffer } | null;
   };
 };
 
@@ -21,9 +21,9 @@ export default function EventCard({ event }: EventCardProps) {
         <Link href={`event/${event.slug}`}>
           <div>
             {/* If image exists, display it */}
-            {event.image ? (
+            {event.eventImage ? (
               <Image
-                src={`data:${event.image.contentType};base64,${event.image.data.toString("base64")}`}
+                src={`data:${event.eventImage.contentType};base64,${event.eventImage.data.toString("base64")}`}
                 width={800}
                 height={200}
                 alt={event.title}
