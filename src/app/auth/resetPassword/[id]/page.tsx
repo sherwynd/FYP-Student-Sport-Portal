@@ -62,7 +62,7 @@ export default async function ResetPassword() {
         <div className="text-center">
           <p className="text-sm text-gray-600">
             Remembered your password?{" "}
-            <a href="/login" className="text-blue-500 hover:underline">
+            <a href="/auth/login" className="text-blue-500 hover:underline">
               Login here
             </a>
           </p>

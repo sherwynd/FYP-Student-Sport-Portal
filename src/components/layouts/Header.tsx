@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@api/auth/[...nextauth]/options";
-import LogOutButton from "@components/layouts/LogOutButton";
+import { verifySession } from "@/libs/dal";
+import { logout } from "@/actions/auth/logoutAction";
 
 export default async function Header() {
-  const session = await getServerSession(authOptions);
+  const session = await verifySession();
   return (
     <header className="w-full bg-blue-300">
       {/* Wrapper for 1440px constraint */}
@@ -23,9 +22,13 @@ export default async function Header() {
         </div>
         <div className="flex items-center space-x-4">
           {session ? (
-            <LogOutButton />
+            <form action={logout}>
+              <button className="rounded bg-gray-500 px-4 py-2 text-white transition hover:bg-black">
+                Log Out
+              </button>
+            </form>
           ) : (
-            <Link href="/login">
+            <Link href="/auth/login">
               <button className="rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600">
                 Login
               </button>

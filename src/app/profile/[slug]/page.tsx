@@ -1,3 +1,3 @@
 export default function ProfileId() {
-  return <h1>hello</h1>;
+  return <div>put the normal details about me here</div>;
 }

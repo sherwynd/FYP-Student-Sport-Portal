@@ -32,5 +32,5 @@ export const register = async (formData: FormData) => {
     },
   });
 
-  return redirect("/login");
+  return redirect("/auth/login");
 };

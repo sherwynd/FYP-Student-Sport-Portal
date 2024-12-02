@@ -1,26 +1,25 @@
+import { verifySession } from "@/libs/dal";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@api/auth/[...nextauth]/options";
 export default async function NavBar() {
-  const session = await getServerSession(authOptions);
-
+  const currentUser = await verifySession();
+  console.log(currentUser);
   const adminLinks = [
     { title: "Home", url: "/" },
     { title: "Event", url: "/event" },
-    { title: "Profile", url: "/profile" },
+    { title: "Profile", url: `/profile/${currentUser?.slug}` },
     { title: "Admin", url: "/admin" },
   ];
 
   const links = [
     { title: "Home", url: "/" },
     { title: "Event", url: "/event" },
-    { title: "Profile", url: "/profile" },
+    { title: "Profile", url: `/profile/${currentUser?.slug}` },
   ];
 
   return (
     <nav className="flex min-h-[40px] items-center justify-center bg-black text-white">
       <div className="flex space-x-4">
-        {session?.user?.role === "admin"
+        {currentUser?.role === "admin"
           ? // If the user is logged in and is an admin
             adminLinks.map(({ title, url }, index) => (
               <Link

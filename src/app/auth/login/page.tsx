@@ -1,16 +1,9 @@
 import { login } from "@/actions/auth/loginAction";
-// import { auth } from "@/auth";
-// import { redirect } from "next/navigation";
 
 export default async function Login() {
-  // const session = await auth();
-  // const user = session?.user;
-  // if (user) {
-  //   redirect("/");
-  // }
   return (
     <div className="mx-auto max-w-md space-y-6 rounded-lg bg-white p-6 shadow-md">
-      <form action={login} className="">
+      <form action={login}>
         <h2 className="text-center text-2xl font-semibold text-gray-800">
           Login Form
         </h2>
@@ -25,7 +18,7 @@ export default async function Login() {
               Email
             </label>
             <input
-              type="email"
+              type="text"
               id="email"
               name="email"
               placeholder="Enter your Email"
@@ -60,7 +53,7 @@ export default async function Login() {
           type="submit"
           className="w-full rounded-md bg-blue-500 py-3 text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
         >
-          Send
+          Login
         </button>
       </form>
       <form
@@ -70,7 +63,7 @@ export default async function Login() {
           type="submit"
           className="w-full rounded-md bg-green-500 py-3 text-white shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
         >
-          Login using Goole
+          Login using Google
         </button>{" "}
       </form>
 

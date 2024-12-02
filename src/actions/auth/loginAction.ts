@@ -28,7 +28,7 @@ export const login = async (formData: FormData) => {
     throw new Error(`Password is invalid`);
   }
 
-  await createSession(user.id, user.role);
+  await createSession(user.id, user.role, user.slug);
   return redirect("/");
 };
 
