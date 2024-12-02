@@ -1,10 +1,16 @@
-import { login } from "@/actions/auth/loginAction";
+import { resetPassword } from "@/actions/auth/resetPasswordAction";
 
-export default async function ResetPassword() {
+type ParamProps = {
+  params: Promise<{ token: string }>;
+};
+
+export default async function ResetPassword({ params }: ParamProps) {
+  const { token } = await params;
+  const resetPasswordWithToken = resetPassword.bind(null, token);
   return (
     <>
       <form
-        action={login}
+        action={resetPasswordWithToken}
         className="mx-auto max-w-md space-y-6 rounded-lg bg-white p-6 shadow-md"
       >
         <h2 className="text-center text-2xl font-semibold text-gray-800">
@@ -58,15 +64,6 @@ export default async function ResetPassword() {
         >
           Reset Password
         </button>
-
-        <div className="text-center">
-          <p className="text-sm text-gray-600">
-            Remembered your password?{" "}
-            <a href="/auth/login" className="text-blue-500 hover:underline">
-              Login here
-            </a>
-          </p>
-        </div>
       </form>
     </>
   );

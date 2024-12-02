@@ -1,10 +1,10 @@
-import { login } from "@/actions/auth/loginAction";
+import { forgotPassword } from "@/actions/auth/forgotPasswordAction";
 
 export default async function ForgotPassword() {
   return (
     <>
       <form
-        action={login}
+        action={forgotPassword}
         className="mx-auto max-w-md space-y-6 rounded-lg bg-white p-6 shadow-md"
       >
         <h2 className="text-center text-2xl font-semibold text-gray-800">
