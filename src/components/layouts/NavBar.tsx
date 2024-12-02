@@ -2,7 +2,6 @@ import { verifySession } from "@/libs/dal";
 import Link from "next/link";
 export default async function NavBar() {
   const currentUser = await verifySession();
-  console.log(currentUser);
   const adminLinks = [
     { title: "Home", url: "/" },
     { title: "Event", url: "/event" },
