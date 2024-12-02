@@ -57,6 +57,7 @@ model Session {
     userId    String   @db.ObjectId
     userRole  String
     expiresAt DateTime
+    userSlug  String   @unique
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
     user      User     @relation(fields: [userId], references: [id])
