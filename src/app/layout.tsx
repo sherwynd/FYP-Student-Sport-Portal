@@ -2,8 +2,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import MainLayout from "@/components/layouts/MainLayout";
-import { getServerSession } from "next-auth";
-import SessionProvider from "@providers/SessionProvider";
 
 //import from file
 import "./globals.css";
@@ -22,16 +20,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
-
   return (
     <html lang="en">
       <body className={`${roboto.className} antialiased`}>
-        <SessionProvider session={session}>
-          <MainLayout>
-            <div className="bg-gray-100">{children}</div>
-          </MainLayout>
-        </SessionProvider>
+        <MainLayout>
+          <div className="bg-gray-100">{children}</div>
+        </MainLayout>
       </body>
     </html>
   );

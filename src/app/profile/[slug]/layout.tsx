@@ -1,6 +1,4 @@
 import Image from "next/image";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@api/auth/[...nextauth]/options";
 import Link from "next/link";
 
 import {
@@ -10,39 +8,66 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { verifySession } from "@/libs/dal";
+import prisma from "@/databases/db";
+import { getProfileDTO } from "@/libs/dto";
 
-export default async function ProfileLayout({
-  children,
-}: {
+type ProfileLayoutProps = {
+  params: Promise<{ slug: string }>;
   children: React.ReactNode;
-}) {
-  const session = await getServerSession(authOptions);
+};
+
+const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
+  params,
+  children,
+}) => {
+  const currentUser = await verifySession();
+  const profileUser = await prisma.user.findUnique({
+    where: {
+      slug: (await params).slug,
+    },
+  });
+  const profileData = await getProfileDTO(
+    (await params).slug,
+    currentUser?.userId as String,
+  );
+
+  if (!profileUser) {
+    return <div>User not found</div>;
+  }
 
   return (
     <>
       <div>
         <h1>Session Information:</h1>
-        <pre>{JSON.stringify(session, null, 2)}</pre>
+        <pre>{JSON.stringify(profileUser, null, 2)}</pre>
+        <pre>{JSON.stringify(currentUser, null, 2)}</pre>
 
         <div className="min-h-screen bg-gray-100 p-4">
           <div className="container mx-auto">
             <h1 className="mb-6 text-center text-2xl font-semibold">
               My Profile
             </h1>
+            {profileData.canEdit ? (
+              <button>Edit Profile</button>
+            ) : (
+              <p>You cannot edit this profile.</p>
+            )}
 
             {/* Two Tabs Layout */}
             <div className="flex flex-col gap-4 md:flex-row">
               {/* Left Tab: Profile */}
               <div className="rounded-lg bg-white p-4 text-center shadow md:w-1/3">
                 <h2 className="mb-4 text-xl font-medium">
-                  Profile Information
+                  Profile Information : {profileUser.name}
                 </h2>
                 <div className="mb-4">
                   <Image
                     src={
-                      session?.user?.image
-                        ? session.user.image
-                        : "/profile-template.png"
+                      // session?.user?.image
+                      //   ? session.user.image
+                      //   :
+                      "/profile-template.png"
                     }
                     alt="User Avatar"
                     width={150}
@@ -56,7 +81,7 @@ export default async function ProfileLayout({
                     Name
                   </label>
                   <h2 className="text-xl font-semibold text-gray-800">
-                    {session?.user?.name || "User Name"}
+                    {profileUser.name || "User Name"}
                   </h2>
                   <label
                     htmlFor="email"
@@ -65,7 +90,7 @@ export default async function ProfileLayout({
                     Email
                   </label>
                   <p className="text-gray-600">
-                    {session?.user?.email || "User Email"}
+                    {profileUser.email || "User Email"}
                   </p>
                 </div>
               </div>
@@ -125,4 +150,6 @@ export default async function ProfileLayout({
       </div>
     </>
   );
-}
+};
+
+export default ProfileLayout;

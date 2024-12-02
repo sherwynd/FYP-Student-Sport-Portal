@@ -40,8 +40,8 @@
       "@databases/*": [
         "./src/databases/*"
       ],
-      "@lib/*": [
-        "./src/lib/*"
+      "@libs/*": [
+        "./src/libs/*"
       ],
       "@schemas/*": [
         "./src/schemas/*"

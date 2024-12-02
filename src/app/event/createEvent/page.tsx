@@ -1,5 +1,7 @@
 import EventForm from "@/components/event/EventForm";
 
-export default function CreateEvent() {
-  return <EventForm />;
-}
+const CreateEvent = () => {
+  return <EventForm actionType="Create" />;
+};
+
+export default CreateEvent;

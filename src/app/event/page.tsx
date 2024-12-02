@@ -1,38 +1,45 @@
 import Link from "next/link";
 import EventCard from "@/components/event/EventCard";
 import prisma from "@/databases/db";
+import { verifySession } from "@/libs/dal";
 
-type TEvent = {
+type EventProps = {
   id: string;
   slug: string;
-  // refId: string;
   title: string;
   description: string;
   courseLevel: string;
   creditHour: number;
   certificate: string;
-  // status: string | null;
-  // image: string | null;
-  // createdAt: Date;
-  // updatedAt: Date;
+  eventImage: { filename: string; contentType: string; data: Buffer } | null;
 };
 
-export default async function Event() {
-  const eventData = await prisma.event.findMany();
+const Event = async () => {
+  const currentUser = await verifySession();
+
+  const eventData = await prisma.event.findMany({
+    include: {
+      eventImage: true,
+    },
+  });
 
   return (
     <main className="flex flex-col items-center justify-center px-4 py-6">
-      <Link href={`event/createEvent`}>
-        <button className="mb-4 rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600">
-          Create Event
-        </button>
-      </Link>
+      {currentUser?.role === "admin" && (
+        <Link href="/event/createEvent">
+          <button className="mb-4 rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600">
+            Create Event
+          </button>
+        </Link>
+      )}
       <div className="mx-auto grid w-full max-w-[1440px] gap-6 px-4 py-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {/* Map Events */}
-        {eventData.map((data: TEvent) => (
+        {eventData.map((data: EventProps) => (
           <EventCard event={data} key={data.id} />
         ))}
       </div>
     </main>
   );
-}
+};
+
+export default Event;
