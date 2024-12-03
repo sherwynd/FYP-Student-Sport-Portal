@@ -24,7 +24,9 @@ export type AdminEventData = {
   description: string;
   courseLevel: string;
   creditHour: number;
-  certificate: string;
+  EventCertificate: {
+    filename: string;
+  } | null;
   //   amount: number;
   //   status: "pending" | "processing" | "success" | "failed";
   //   email: string;
@@ -100,7 +102,7 @@ export const AdminEventDataColumns: ColumnDef<AdminEventData>[] = [
     },
   },
   {
-    accessorKey: "certificate",
+    accessorKey: "EventCertificate.filename",
     header: ({ column }) => {
       return (
         <Button
