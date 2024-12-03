@@ -31,6 +31,16 @@ model User {
     // Event              Event[]
 }
 
+model ProfileImage {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    filename    String
+    contentType String
+    data        Bytes // Base64 string (or it can be binary data if preferred)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    user        User?    @relation // Optional back-reference to Event (if needed)
+}
+
 model Account {
     id                String   @id @default(auto()) @map("_id") @db.ObjectId
     userId            String   @db.ObjectId
@@ -79,6 +89,7 @@ model Event {
     description        String
     courseLevel        String
     creditHour         Int
+    type               String?
     status             String?
     eventImageId       String?             @unique @db.ObjectId
     eventImage         EventImage?         @relation(fields: [eventImageId], references: [id])
@@ -109,16 +120,6 @@ model EventCertificate {
     event       Event?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-}
-
-model ProfileImage {
-    id          String   @id @default(auto()) @map("_id") @db.ObjectId
-    filename    String
-    contentType String
-    data        Bytes // Base64 string (or it can be binary data if preferred)
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    user        User?    @relation // Optional back-reference to Event (if needed)
 }
 
 model EventRegistration {

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { addEvent, editEvent } from "@/actions/eventAction";
+import { addEvent, editEvent } from "@/actions/event/eventAction";
 import Image from "next/image";
 
 type EventFormProps = {

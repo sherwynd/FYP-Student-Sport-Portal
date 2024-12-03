@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DeleteAlertBox from "@/components/common/DeleteAlertBox";
 import { verifySession } from "@/libs/dal";
+import { registerEvent } from "@/actions/event/registerEventAction";
 
 type ParamProps = {
   params: Promise<{ slug: string }>;
@@ -21,6 +22,12 @@ const EventId = async ({ params }: ParamProps) => {
       eventCertificate: true,
     },
   });
+
+  const registerEventWithId = registerEvent.bind(
+    null,
+    eventIdData?.id as string,
+    currentUser?.userId as string,
+  );
   return (
     <section className="flex flex-col items-center">
       {/* Image Section */}
@@ -79,6 +86,13 @@ const EventId = async ({ params }: ParamProps) => {
           <DeleteAlertBox id={eventIdData?.id as string} />
         </>
       )}
+      <div>
+        <form action={registerEventWithId}>
+          <button className="mb-4 rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600">
+            Register Event
+          </button>
+        </form>
+      </div>
     </section>
   );
 };
