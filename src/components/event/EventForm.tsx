@@ -12,7 +12,6 @@ type EventFormProps = {
     description: string;
     courseLevel: string;
     creditHour: number;
-    certificate: string;
   };
 };
 
@@ -67,6 +66,8 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
               <div className="relative h-full w-full">
                 <Image
                   src={previewUrl}
+                  width={10}
+                  height={10}
                   alt="Preview"
                   className="h-full w-full rounded-lg object-cover"
                 />
@@ -193,12 +194,12 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
               Event Certificate
             </label>
             <input
-              type="text"
+              type="file"
               name="certificate"
-              placeholder="Write the certificate..."
+              placeholder="Insert the certificate file(s)"
               required
-              defaultValue={initialData?.certificate ?? ""}
               className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              multiple
             />
           </div>
 

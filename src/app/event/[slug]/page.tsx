@@ -18,9 +18,9 @@ const EventId = async ({ params }: ParamProps) => {
     },
     include: {
       eventImage: true,
+      eventCertificate: true,
     },
   });
-
   return (
     <section className="flex flex-col items-center">
       {/* Image Section */}
@@ -56,7 +56,9 @@ const EventId = async ({ params }: ParamProps) => {
       <div className="grid w-full max-w-4xl grid-cols-1 gap-4 px-4 py-6 sm:grid-cols-3">
         <div className="rounded-lg bg-white p-4 text-center shadow">
           <h2 className="text-lg font-semibold text-gray-700">Certificate</h2>
-          <p className="text-gray-600">{eventIdData?.certificate || "N/A"}</p>
+          <p className="text-gray-600">
+            {eventIdData?.eventCertificate?.filename || "N/A"}
+          </p>
         </div>
         <div className="rounded-lg bg-white p-4 text-center shadow">
           <h2 className="text-lg font-semibold text-gray-700">Credit Hours</h2>

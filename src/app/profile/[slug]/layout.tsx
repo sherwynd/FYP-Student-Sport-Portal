@@ -11,6 +11,7 @@ import {
 import { verifySession } from "@/libs/dal";
 import prisma from "@/databases/db";
 import { getProfileDTO } from "@/libs/dto";
+import React from "react";
 
 type ProfileLayoutProps = {
   params: Promise<{ slug: string }>;
@@ -27,10 +28,8 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
       slug: (await params).slug,
     },
   });
-  const profileData = await getProfileDTO(
-    (await params).slug,
-    currentUser?.userId as String,
-  );
+  const { slug } = await params;
+  const profileData = await getProfileDTO(slug, currentUser?.userId as String);
 
   if (!profileUser) {
     return <div>User not found</div>;
@@ -102,7 +101,7 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
                   <NavigationMenu>
                     <NavigationMenuList>
                       <NavigationMenuItem>
-                        <Link href="/profile/" legacyBehavior passHref>
+                        <Link href={`/profile/${slug}`} legacyBehavior passHref>
                           <NavigationMenuLink
                             className={navigationMenuTriggerStyle()}
                           >
@@ -112,7 +111,7 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
                       </NavigationMenuItem>
                       <NavigationMenuItem>
                         <Link
-                          href="/profile/eventHistory"
+                          href={`/profile/${slug}/eventHistory`}
                           legacyBehavior
                           passHref
                         >
@@ -125,7 +124,7 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
                       </NavigationMenuItem>
                       <NavigationMenuItem>
                         <Link
-                          href="/profile/dashboardDetail"
+                          href={`/profile/${slug}/dashboardDetail`}
                           legacyBehavior
                           passHref
                         >

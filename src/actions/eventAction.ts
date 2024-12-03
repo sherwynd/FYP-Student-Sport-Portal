@@ -10,16 +10,18 @@ export const addEvent = async (formData: FormData, imageFile: File | null) => {
     description: string;
     courseLevel: string;
     creditHour: number;
-    certificate: string;
+    certificate: File | null;
     eventImageId: string | null;
+    eventCertificateId: string | null;
   } = {
     title: formData.get("title") as string,
     slug: (formData.get("title") as string).replace(/\s+/g, "-").toLowerCase(),
     description: formData.get("description") as string,
     courseLevel: formData.get("courseLevel") as string,
     creditHour: Number(formData.get("creditHour")),
-    certificate: formData.get("certificate") as string,
+    certificate: formData.get("certificate") as File | null,
     eventImageId: null,
+    eventCertificateId: null,
   };
 
   let imageRecord = null;
@@ -43,9 +45,38 @@ export const addEvent = async (formData: FormData, imageFile: File | null) => {
     }
   }
 
+  if (eventData.certificate) {
+    try {
+      const certificateFile = eventData.certificate;
+      const certificateBuffer = await convertImageToBuffer(certificateFile);
+
+      // Create certificate record in the database
+      const certificateRecord = await prisma.eventCertificate.create({
+        data: {
+          filename: certificateFile.name,
+          contentType: certificateFile.type,
+          data: certificateBuffer,
+        },
+      });
+
+      eventData.eventCertificateId = certificateRecord.id;
+    } catch (error) {
+      console.error("Error uploading certificate:", error);
+      throw new Error("Failed to upload certificate.");
+    }
+  }
+
   try {
     await prisma.event.create({
-      data: eventData,
+      data: {
+        title: eventData.title,
+        slug: eventData.slug,
+        description: eventData.description,
+        courseLevel: eventData.courseLevel,
+        creditHour: eventData.creditHour,
+        eventImageId: eventData.eventImageId, // Associating event image ID
+        eventCertificateId: eventData.eventCertificateId, // Associating event certificate ID (nullable)
+      },
     });
   } catch (error) {
     console.error("Error creating event:", error);

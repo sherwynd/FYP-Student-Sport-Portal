@@ -9,7 +9,11 @@ type EventCardProps = {
     description: string;
     courseLevel: string;
     creditHour: number;
-    certificate: string;
+    eventCertificate: {
+      filename: string;
+      contentType: string;
+      data: Buffer;
+    } | null;
     eventImage: { filename: string; contentType: string; data: Buffer } | null;
   };
 };
@@ -41,7 +45,9 @@ export default function EventCard({ event }: EventCardProps) {
 
             <div className="p-6">
               <h2 className="mb-2 text-lg font-bold">{event.title}</h2>
-              <p className="mb-4 text-sm text-gray-700">{event.certificate}</p>
+              <p className="mb-4 text-sm text-gray-700">
+                {event.eventCertificate?.filename}
+              </p>
               <p className="text-sm text-gray-500">
                 Credit Hour: {event.creditHour}
               </p>

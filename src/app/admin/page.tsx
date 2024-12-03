@@ -7,7 +7,15 @@ import { AdminEventDataColumns } from "@/components/dataTableColumns/AdminEventT
 import { AdminUserDataColumns } from "@/components/dataTableColumns/AdminUserTableColumns";
 
 export default async function Admin() {
-  const eventData = await prisma.event.findMany();
+  const eventData = await prisma.event.findMany({
+    include: {
+      eventCertificate: {
+        select: {
+          filename: true, // Only include the filename
+        },
+      },
+    },
+  });
   const userData = await prisma.user.findMany();
   return (
     <main className="admin-main flex flex-col items-center justify-center px-4 py-6">
