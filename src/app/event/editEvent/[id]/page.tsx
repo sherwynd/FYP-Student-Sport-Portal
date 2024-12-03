@@ -10,6 +10,9 @@ const EditEvent = async ({ params }: ParamProps) => {
     where: {
       id: (await params).id,
     },
+    include: {
+      eventCertificate: true,
+    },
   });
 
   if (!eventIdData) {

@@ -12,7 +12,6 @@ type EventFormProps = {
     description: string;
     courseLevel: string;
     creditHour: number;
-    certificate: string;
   };
 };
 
@@ -199,7 +198,6 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
               name="certificate"
               placeholder="Insert the certificate file(s)"
               required
-              defaultValue={initialData?.certificate ?? ""}
               className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
               multiple
             />

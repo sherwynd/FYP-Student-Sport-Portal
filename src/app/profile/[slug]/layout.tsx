@@ -140,10 +140,7 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
                 </div>
 
                 <div className="rounded-lg bg-white p-4 shadow-md">
-                  {React.cloneElement(children as React.ReactElement, {
-                    profileData,
-                    slug,
-                  })}
+                  {children}
                 </div>
               </div>
             </div>
