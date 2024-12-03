@@ -38,20 +38,13 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
   return (
     <>
       <div>
-        <h1>Session Information:</h1>
-        <pre>{JSON.stringify(profileUser, null, 2)}</pre>
-        <pre>{JSON.stringify(currentUser, null, 2)}</pre>
-
         <div className="min-h-screen bg-gray-100 p-4">
           <div className="container mx-auto">
-            <h1 className="mb-6 text-center text-2xl font-semibold">
-              My Profile
-            </h1>
-            {profileData.canEdit ? (
+            {/* {profileData.canEdit ? (
               <button>Edit Profile</button>
             ) : (
               <p>You cannot edit this profile.</p>
-            )}
+            )} */}
 
             {/* Two Tabs Layout */}
             <div className="flex flex-col gap-4 md:flex-row">
@@ -62,12 +55,7 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
                 </h2>
                 <div className="mb-4">
                   <Image
-                    src={
-                      // session?.user?.image
-                      //   ? session.user.image
-                      //   :
-                      "/profile-template.png"
-                    }
+                    src={"/profile-template.png"}
                     alt="User Avatar"
                     width={150}
                     height={150}
@@ -124,7 +112,7 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
                       </NavigationMenuItem>
                       <NavigationMenuItem>
                         <Link
-                          href={`/profile/${slug}/dashboardDetail`}
+                          href={`/profile/${slug}/dashboard`}
                           legacyBehavior
                           passHref
                         >
@@ -132,6 +120,19 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
                             className={navigationMenuTriggerStyle()}
                           >
                             Dashboard
+                          </NavigationMenuLink>
+                        </Link>
+                      </NavigationMenuItem>
+                      <NavigationMenuItem>
+                        <Link
+                          href={`/profile/${slug}/report`}
+                          legacyBehavior
+                          passHref
+                        >
+                          <NavigationMenuLink
+                            className={navigationMenuTriggerStyle()}
+                          >
+                            Report
                           </NavigationMenuLink>
                         </Link>
                       </NavigationMenuItem>
