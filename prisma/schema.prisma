@@ -83,7 +83,7 @@ model Event {
     eventImageId       String?             @unique @db.ObjectId
     eventImage         EventImage?         @relation(fields: [eventImageId], references: [id])
     eventCertificateId String?             @unique @db.ObjectId
-    EventCertificate   EventCertificate?   @relation(fields: [eventCertificateId], references: [id])
+    eventCertificate   EventCertificate?   @relation(fields: [eventCertificateId], references: [id])
     eventRegistrations EventRegistration[]
     // userId             String              @db.ObjectId
     // author             User                @relation(fields: [userId], references: [id])
