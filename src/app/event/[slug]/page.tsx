@@ -18,7 +18,7 @@ const EventId = async ({ params }: ParamProps) => {
     },
     include: {
       eventImage: true,
-      EventCertificate: true,
+      eventCertificate: true,
     },
   });
   return (
@@ -57,7 +57,7 @@ const EventId = async ({ params }: ParamProps) => {
         <div className="rounded-lg bg-white p-4 text-center shadow">
           <h2 className="text-lg font-semibold text-gray-700">Certificate</h2>
           <p className="text-gray-600">
-            {eventIdData?.EventCertificate?.filename || "N/A"}
+            {eventIdData?.eventCertificate?.filename || "N/A"}
           </p>
         </div>
         <div className="rounded-lg bg-white p-4 text-center shadow">

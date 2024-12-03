@@ -9,7 +9,7 @@ import { AdminUserDataColumns } from "@/components/dataTableColumns/AdminUserTab
 export default async function Admin() {
   const eventData = await prisma.event.findMany({
     include: {
-      EventCertificate: {
+      eventCertificate: {
         select: {
           filename: true, // Only include the filename
         },
@@ -17,7 +17,6 @@ export default async function Admin() {
     },
   });
   const userData = await prisma.user.findMany();
-  console.log(eventData);
   return (
     <main className="admin-main flex flex-col items-center justify-center px-4 py-6">
       <div className="event-data-table-container my-2 w-full max-w-7xl overflow-auto">

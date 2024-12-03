@@ -24,7 +24,7 @@ export type AdminEventData = {
   description: string;
   courseLevel: string;
   creditHour: number;
-  EventCertificate: {
+  eventCertificate: {
     filename: string;
   } | null;
   //   amount: number;
@@ -102,7 +102,7 @@ export const AdminEventDataColumns: ColumnDef<AdminEventData>[] = [
     },
   },
   {
-    accessorKey: "EventCertificate.filename",
+    accessorKey: "eventCertificate.filename",
     header: ({ column }) => {
       return (
         <Button
