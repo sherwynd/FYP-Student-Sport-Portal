@@ -21,9 +21,8 @@ const EventHistory = async ({ params }: ParamProps) => {
     },
   });
 
-  console.log(userRegisterEventData);
   return (
-    <div className="user-data-table-container my-2 w-full max-w-7xl overflow-auto">
+    <div className="user-registration-event-data-table-container my-2 w-full max-w-7xl overflow-auto">
       {/* User Event Registration Data Table */}
       <div className="inner-data-table rounded-lg border border-gray-200 bg-white p-4 shadow-md">
         <DataTable

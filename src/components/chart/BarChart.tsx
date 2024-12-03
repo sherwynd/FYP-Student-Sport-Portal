@@ -1,8 +1,9 @@
 "use client";
+import React from "react";
 
 import {
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -18,17 +19,17 @@ const data = [
   { value: 18, label: "time 4" },
 ];
 
-export default function TestChart() {
+export const RechartBarChart = () => {
   return (
     <ResponsiveContainer width="100%" minHeight={300}>
-      <LineChart width={500} height={300} data={data}>
+      <BarChart width={500} height={300} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="label" padding={{ left: 30, right: 30 }} />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line dataKey="value" />
-      </LineChart>
+        <Bar dataKey="value" fill="#8884d8" />
+      </BarChart>
     </ResponsiveContainer>
   );
-}
+};

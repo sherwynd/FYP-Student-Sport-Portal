@@ -40,11 +40,11 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
       <div>
         <div className="min-h-screen bg-gray-100 p-4">
           <div className="container mx-auto">
-            {/* {profileData.canEdit ? (
+            {profileData.canEdit ? (
               <button>Edit Profile</button>
             ) : (
               <p>You cannot edit this profile.</p>
-            )} */}
+            )}
 
             {/* Two Tabs Layout */}
             <div className="flex flex-col gap-4 md:flex-row">
@@ -120,6 +120,19 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
                             className={navigationMenuTriggerStyle()}
                           >
                             Dashboard
+                          </NavigationMenuLink>
+                        </Link>
+                      </NavigationMenuItem>
+                      <NavigationMenuItem>
+                        <Link
+                          href={`/profile/${slug}/certificate`}
+                          legacyBehavior
+                          passHref
+                        >
+                          <NavigationMenuLink
+                            className={navigationMenuTriggerStyle()}
+                          >
+                            Certificate
                           </NavigationMenuLink>
                         </Link>
                       </NavigationMenuItem>
