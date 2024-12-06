@@ -35,7 +35,7 @@ export default function EventCard({ event }: EventCardProps) {
               />
             ) : (
               <Image
-                src="/test-event-image.jpg"
+                src="/default-event-template.jpg"
                 width={800}
                 height={200}
                 alt="Picture of the event image"

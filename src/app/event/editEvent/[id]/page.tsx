@@ -11,7 +11,16 @@ const EditEvent = async ({ params }: ParamProps) => {
       id: (await params).id,
     },
     include: {
-      eventCertificate: true,
+      eventCertificate: {
+        select: {
+          id: true,
+        },
+      },
+      eventImage: {
+        select: {
+          id: true,
+        },
+      },
     },
   });
 

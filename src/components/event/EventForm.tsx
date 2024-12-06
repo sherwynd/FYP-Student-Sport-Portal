@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
 
-import { addEvent, editEvent } from "@/actions/event/eventAction";
+import { addEvent } from "@/actions/event/createEventAction";
+import { editEvent } from "@/actions/event/editEventAction";
 import Image from "next/image";
 
 type EventFormProps = {
   actionType: "Create" | "Edit";
-  initialData?: {
+  initialData: {
     id: string;
     title: string;
     description: string;
@@ -52,8 +53,7 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
           action={
             actionType === "Create"
               ? (formData) => addEvent(formData, imageFile)
-              : (formData) =>
-                  editEvent(formData, imageFile, initialData?.id ?? "")
+              : (formData) => editEvent(formData, imageFile, initialData.id)
           }
         >
           {/* Drag and Drop Section */}
@@ -197,9 +197,7 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
               type="file"
               name="certificate"
               placeholder="Insert the certificate file(s)"
-              required
               className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              multiple
             />
           </div>
 

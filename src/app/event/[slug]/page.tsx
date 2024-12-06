@@ -13,7 +13,7 @@ type ParamProps = {
 const EventId = async ({ params }: ParamProps) => {
   const currentUser = await verifySession();
 
-  const eventIdData = await await prisma.event.findUnique({
+  const eventIdData = await prisma.event.findUnique({
     where: {
       slug: (await params).slug,
     },
@@ -42,7 +42,7 @@ const EventId = async ({ params }: ParamProps) => {
           />
         ) : (
           <Image
-            src="/test-event-image.jpg"
+            src="/default-event-template.jpg"
             width={800}
             height={200}
             alt="Picture of the event image"
