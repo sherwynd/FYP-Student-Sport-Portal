@@ -93,9 +93,9 @@ model Event {
     type               String?
     status             String?
     eventImageId       String?             @unique @db.ObjectId
-    eventImage         EventImage?         @relation(fields: [eventImageId], references: [id])
+    eventImage         EventImage?         @relation(fields: [eventImageId], references: [id], onDelete: Cascade)
     eventCertificateId String?             @unique @db.ObjectId
-    eventCertificate   EventCertificate?   @relation(fields: [eventCertificateId], references: [id])
+    eventCertificate   EventCertificate?   @relation(fields: [eventCertificateId], references: [id], onDelete: Cascade)
     eventRegistrations EventRegistration[]
     // userId             String              @db.ObjectId
     // author             User                @relation(fields: [userId], references: [id])
@@ -130,7 +130,7 @@ model EventRegistration {
     status           String            @default("new") // Status like "new," "enrolled," or "completed"
     createdAt        DateTime          @default(now())
     updatedAt        DateTime          @updatedAt
-    user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user             User              @relation(fields: [userId], references: [id])
     event            Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
     reportSubmission ReportSubmission?
 
@@ -146,8 +146,8 @@ model ReportSubmission {
     createdAt           DateTime          @default(now())
     updatedAt           DateTime          @updatedAt
     user                User              @relation(fields: [userId], references: [id])
-    ReportFile          ReportFile?
-    eventRegistration   EventRegistration @relation(fields: [eventRegistrationId], references: [id])
+    ReportFile          ReportFile?       @relation()
+    eventRegistration   EventRegistration @relation(fields: [eventRegistrationId], references: [id], onDelete: Cascade)
     eventRegistrationId String            @unique @db.ObjectId
 }
 
