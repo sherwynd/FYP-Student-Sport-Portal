@@ -31,6 +31,14 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
   const { slug } = await params;
   const profileData = await getProfileDTO(slug, currentUser?.userId as String);
 
+  const formatDate = (dateTime: string | Date) => {
+    const date = new Date(dateTime);
+    return date.toISOString().split("T")[0]; // Extracts YYYY-MM-DD
+  };
+
+  // Usage
+  const formattedDate = formatDate(profileUser?.createdAt as Date);
+
   if (!profileUser) {
     return <div>User not found</div>;
   }
@@ -40,46 +48,67 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
       <div>
         <div className="min-h-screen bg-gray-100 p-4">
           <div className="container mx-auto">
-            {profileData.canEdit ? (
-              <button>Edit Profile</button>
-            ) : (
-              <p>You cannot edit this profile.</p>
-            )}
-
             {/* Two Tabs Layout */}
             <div className="flex flex-col gap-4 md:flex-row">
               {/* Left Tab: Profile */}
-              <div className="rounded-lg bg-white p-4 text-center shadow md:w-1/3">
-                <h2 className="mb-4 text-xl font-medium">
-                  Profile Information : {profileUser.name}
-                </h2>
-                <div className="mb-4">
+              <div className="mx-auto max-w-md rounded-lg bg-white p-6 text-center shadow-lg md:w-1/3">
+                {/* Profile Header */}
+                <div className="mb-6">
                   <Image
-                    src={"/profile-template.png"}
+                    src="/profile-template.png"
                     alt="User Avatar"
                     width={150}
                     height={150}
-                    className="mx-auto rounded-full"
+                    className="mx-auto mb-4 rounded-full border-4 border-blue-500 shadow-md"
                   />
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Name
-                  </label>
-                  <h2 className="text-xl font-semibold text-gray-800">
+                  <h2 className="text-2xl font-bold text-gray-800">
                     {profileUser.name || "User Name"}
                   </h2>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email
-                  </label>
-                  <p className="text-gray-600">
+                  <p className="text-sm text-gray-500">
                     {profileUser.email || "User Email"}
                   </p>
                 </div>
+
+                {/* Profile Details */}
+                <div className="space-y-4">
+                  {/* Status */}
+                  <div className="text-left">
+                    <label
+                      htmlFor="status"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Status
+                    </label>
+                    <p
+                      className={`text-lg font-semibold ${profileUser.isActive ? "text-green-600" : "text-red-600"}`}
+                    >
+                      {profileUser.isActive ? "Active" : "Inactive"}
+                    </p>
+                  </div>
+                  {/* Join Date */}
+                  <div className="text-left">
+                    <label
+                      htmlFor="join-date"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Join Date
+                    </label>
+                    <p className="mt-1 text-lg font-semibold text-gray-600">
+                      {formattedDate || "N/A"}
+                    </p>
+                  </div>
+                </div>
+
+                {profileData.canEdit ? (
+                  <div className="mt-6">
+                    <button className="w-full rounded bg-blue-500 px-4 py-2 font-semibold text-white shadow-md transition-all hover:bg-blue-600">
+                      Edit Profile
+                    </button>
+                  </div>
+                ) : (
+                  <></>
+                )}
+                {/* Edit Button */}
               </div>
 
               {/* Right Tab */}
