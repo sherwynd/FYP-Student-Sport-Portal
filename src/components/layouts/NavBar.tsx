@@ -12,7 +12,9 @@ export default async function NavBar() {
   const links = [
     { title: "Home", url: "/" },
     { title: "Event", url: "/event" },
-    { title: "Profile", url: `/profile/${currentUser?.slug}` },
+    ...(currentUser
+      ? [{ title: "Profile", url: `/profile/${currentUser?.slug}` }]
+      : []),
   ];
 
   return (
