@@ -21,6 +21,12 @@ export async function encrypt(payload: { userId: string; expiresAt: Date }) {
 }
 
 export async function decrypt(session: string | undefined = "") {
+  if (!secretKey) {
+    console.error("SESSION_SECRET is not defined!");
+  }
+  if (!encodedKey) {
+    console.error("Something wrong with encodedKey!");
+  }
   if (!session) return null;
   const { payload } = await jwtVerify(session, encodedKey, {
     algorithms: ["HS256"],
