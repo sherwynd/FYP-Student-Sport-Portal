@@ -7,7 +7,7 @@ import Image from "next/image";
 
 type EventFormProps = {
   actionType: "Create" | "Edit";
-  initialData: {
+  initialData?: {
     id: string;
     title: string;
     description: string;
@@ -53,7 +53,8 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
           action={
             actionType === "Create"
               ? (formData) => addEvent(formData, imageFile)
-              : (formData) => editEvent(formData, imageFile, initialData.id)
+              : (formData) =>
+                  editEvent(formData, imageFile, initialData?.id ?? "")
           }
         >
           {/* Drag and Drop Section */}
