@@ -11,7 +11,7 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 
-import { deleteEvent } from "@/actions/eventAction";
+import { deleteEvent } from "@/actions/event/deleteEventAction";
 
 export default function DeleteAlertBox({ id }: { id: string }) {
   return (

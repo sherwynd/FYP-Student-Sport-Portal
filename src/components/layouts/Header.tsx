@@ -6,19 +6,19 @@ import { logout } from "@/actions/auth/logoutAction";
 export default async function Header() {
   const session = await verifySession();
   return (
-    <header className="w-full bg-blue-300">
+    <header className="w-full bg-[#041c2c]">
       {/* Wrapper for 1440px constraint */}
       <div className="mx-auto flex max-w-[1440px] items-center justify-between px-4 py-2">
         <div className="flex items-center">
           <Image
-            src="/HeaderLogo.png"
+            src="/ISN_Primary_Logo.png"
             width={80}
             height={80}
             alt="Logo"
             className="m-2"
             priority={true}
           />
-          <h1 className="text-xl font-bold">Student Sport Portal</h1>
+          <h1 className="text-xl font-bold text-white">Student Sport Portal</h1>
         </div>
         <div className="flex items-center space-x-4">
           {session ? (

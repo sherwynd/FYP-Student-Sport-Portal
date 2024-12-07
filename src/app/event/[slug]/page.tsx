@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DeleteAlertBox from "@/components/common/DeleteAlertBox";
 import { verifySession } from "@/libs/dal";
+import { registerEvent } from "@/actions/event/registerEventAction";
 
 type ParamProps = {
   params: Promise<{ slug: string }>;
@@ -12,7 +13,7 @@ type ParamProps = {
 const EventId = async ({ params }: ParamProps) => {
   const currentUser = await verifySession();
 
-  const eventIdData = await await prisma.event.findUnique({
+  const eventIdData = await prisma.event.findUnique({
     where: {
       slug: (await params).slug,
     },
@@ -21,6 +22,12 @@ const EventId = async ({ params }: ParamProps) => {
       eventCertificate: true,
     },
   });
+
+  const registerEventWithId = registerEvent.bind(
+    null,
+    eventIdData?.id as string,
+    currentUser?.userId as string,
+  );
   return (
     <section className="flex flex-col items-center">
       {/* Image Section */}
@@ -35,7 +42,7 @@ const EventId = async ({ params }: ParamProps) => {
           />
         ) : (
           <Image
-            src="/test-event-image.jpg"
+            src="/default-event-template.jpg"
             width={800}
             height={200}
             alt="Picture of the event image"
@@ -79,6 +86,13 @@ const EventId = async ({ params }: ParamProps) => {
           <DeleteAlertBox id={eventIdData?.id as string} />
         </>
       )}
+      <div>
+        <form action={registerEventWithId}>
+          <button className="mb-4 rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600">
+            Register Event
+          </button>
+        </form>
+      </div>
     </section>
   );
 };

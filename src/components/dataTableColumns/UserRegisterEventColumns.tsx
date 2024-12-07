@@ -16,21 +16,24 @@ import {
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-type AdminUserData = {
+type UserRegisterEventData = {
   id: string;
-  slug: string;
-  refId: string;
-  name: string | null;
-  email: string | null;
-  emailVerified: Date | null;
-  password: string | null;
-  isActive: boolean;
-  role: string | null;
+  userId: string;
+  eventId: string;
+  status: string;
   createdAt: Date;
   updatedAt: Date;
+  event: {
+    id: string;
+    slug: string;
+    title: string;
+    description: string;
+    courseLevel: string;
+    creditHour: number;
+  };
 };
 
-export const AdminUserDataColumns: ColumnDef<AdminUserData>[] = [
+export const UserRegisterEventColumns: ColumnDef<UserRegisterEventData>[] = [
   // Row Selection
   {
     id: "select",
@@ -57,7 +60,7 @@ export const AdminUserDataColumns: ColumnDef<AdminUserData>[] = [
 
   //Data Accessors
   {
-    accessorKey: "name",
+    accessorKey: "event.title",
     //Sorting
     header: ({ column }) => {
       return (
@@ -65,28 +68,28 @@ export const AdminUserDataColumns: ColumnDef<AdminUserData>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          Event Title
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "email",
+    accessorKey: "event.courseLevel",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Course Level
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "activeStatus",
+    accessorKey: "status",
     header: ({ column }) => {
       return (
         <Button
@@ -94,20 +97,6 @@ export const AdminUserDataColumns: ColumnDef<AdminUserData>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "role",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Career
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

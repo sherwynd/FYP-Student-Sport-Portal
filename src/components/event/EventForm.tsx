@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 
-import { addEvent, editEvent } from "@/actions/eventAction";
+import { addEvent } from "@/actions/event/createEventAction";
+import { editEvent } from "@/actions/event/editEventAction";
 import Image from "next/image";
 
 type EventFormProps = {
@@ -197,9 +198,7 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
               type="file"
               name="certificate"
               placeholder="Insert the certificate file(s)"
-              required
               className="w-full rounded-lg border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              multiple
             />
           </div>
 

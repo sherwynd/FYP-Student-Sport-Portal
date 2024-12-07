@@ -76,14 +76,21 @@ export function DataTable<TData, TValue>({
     <>
       <div className="flex items-center py-4">
         {/* based on the Filter you desired */}
-        <Input
-          placeholder={filter}
-          value={(table.getColumn(filter)?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn(filter)?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        {filter !== "none" ? (
+          <Input
+            placeholder={filter}
+            value={(table.getColumn(filter)?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn(filter)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        ) : (
+          <>
+            <h1>Filter not available</h1>
+          </>
+        )}
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
