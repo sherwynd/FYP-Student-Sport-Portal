@@ -21,6 +21,9 @@ export async function encrypt(payload: { userId: string; expiresAt: Date }) {
 }
 
 export async function decrypt(session: string | undefined = "") {
+  console.log("SESSION_SECRET:", process.env.SESSION_SECRET);
+  console.log("Encoded Key:", encodedKey);
+  console.log("Session Cookie:", session);
   if (!secretKey) {
     console.error("SESSION_SECRET is not defined!");
   }
