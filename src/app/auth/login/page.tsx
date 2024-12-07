@@ -56,22 +56,12 @@ export default async function Login() {
           Login
         </button>
       </form>
-      <form
-      // action={google}
-      >
-        <button
-          type="submit"
-          className="w-full rounded-md bg-green-500 py-3 text-white shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
-        >
-          Login using Google
-        </button>{" "}
-      </form>
 
       <div className="text-center">
         <p className="text-sm text-gray-600">
           Create new account here{" "}
           <a href="/auth/register" className="text-blue-500 hover:underline">
-            register now
+            Register now
           </a>
         </p>
       </div>
