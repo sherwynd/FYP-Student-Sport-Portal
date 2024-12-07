@@ -24,9 +24,7 @@ type AdminUserData = {
   email: string | null;
   emailVerified: Date | null;
   password: string | null;
-  age: number | null;
-  gender: string | null;
-  activeStatus: string | null;
+  isActive: boolean;
   role: string | null;
   createdAt: Date;
   updatedAt: Date;
