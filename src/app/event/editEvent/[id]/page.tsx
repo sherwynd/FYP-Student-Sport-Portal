@@ -1,4 +1,4 @@
-import EventForm from "@/components/event/EventForm";
+import EventForm from "@features/event/components/EventForm";
 import prisma from "@/databases/db";
 
 type ParamProps = {

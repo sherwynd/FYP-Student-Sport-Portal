@@ -10,7 +10,7 @@ import React from "react";
 
 // import { Card, CardContent } from "@/components/ui/card";
 import prisma from "@/databases/db";
-import EventCard from "@/components/event/EventCard";
+import EventCard from "@/features/event/components/EventCard";
 
 // import prisma from "@/databases/db";
 // import EventCard from "@/components/event/EventCard";
