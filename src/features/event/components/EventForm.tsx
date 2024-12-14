@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
 
-import { addEvent } from "@/actions/event/createEventAction";
-import { editEvent } from "@/actions/event/editEventAction";
 import Image from "next/image";
+import { editEvent } from "../servers/editEventAction";
+import { addEvent } from "../servers/createEventAction";
 
 type EventFormProps = {
   actionType: "Create" | "Edit";

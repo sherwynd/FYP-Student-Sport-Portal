@@ -2,9 +2,9 @@ import prisma from "@/databases/db";
 
 import Image from "next/image";
 import Link from "next/link";
-import DeleteAlertBox from "@/components/common/DeleteAlertBox";
 import { verifySession } from "@/libs/dal";
-import { registerEvent } from "@/actions/event/registerEventAction";
+import { registerEvent } from "../../../features/event/servers/registerEventAction";
+import DeleteAlertBox from "@/features/event/components/DeleteAlertBox";
 
 type ParamProps = {
   params: Promise<{ slug: string }>;
