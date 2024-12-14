@@ -51,7 +51,10 @@
       ],
       "@api/*": [
         "./src/app/api/*"
-      ]
+      ],
+      "@features/*": [
+        "./src/features/*"
+      ],
     },
     "target": "ES2017"
   },
