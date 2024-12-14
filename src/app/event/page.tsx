@@ -1,7 +1,7 @@
 import Link from "next/link";
-import EventCard from "@/components/event/EventCard";
 import prisma from "@/databases/db";
 import { verifySession } from "@/libs/dal";
+import EventCard from "@/features/event/components/EventCard";
 
 const Event = async () => {
   const currentUser = await verifySession();

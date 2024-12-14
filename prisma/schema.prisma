@@ -19,7 +19,7 @@ model User {
     profileImage       ProfileImage?       @relation(fields: [profileImageId], references: [id])
     authProviderId     String?
     isActive           Boolean             @default(false) // Replaces activeStatus with a boolean
-    role               String              @default("admin")
+    role               Role                @default(user)
     createdAt          DateTime            @default(now())
     updatedAt          DateTime            @updatedAt
     accounts           Account[]
@@ -114,8 +114,8 @@ model Event {
     eventCertificateId String?             @unique @db.ObjectId
     eventCertificate   EventCertificate?   @relation(fields: [eventCertificateId], references: [id], onDelete: Cascade)
     eventRegistrations EventRegistration[]
-    // userId             String              @db.ObjectId
-    // author             User                @relation(fields: [userId], references: [id])
+    // authorId             String              @db.ObjectId
+    // author             User                @relation(fields: [authorId], references: [id])
     createdAt          DateTime            @default(now())
     updatedAt          DateTime            @updatedAt
 }
@@ -190,4 +190,12 @@ model Health {
     updatedAt     DateTime @updatedAt
     User          User?    @relation(fields: [userId], references: [id])
     userId        String?  @db.ObjectId
+}
+
+enum Role {
+    admin
+    user
+    student
+    university
+    industry
 }

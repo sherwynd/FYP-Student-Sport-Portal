@@ -3,8 +3,8 @@
 import prisma from "@/databases/db";
 import TestChart from "@/components/chart/TestChart";
 import { DataTable } from "@/components/ui/DataTable";
-import { AdminEventDataColumns } from "@/components/dataTableColumns/AdminEventTableColumns";
-import { AdminUserDataColumns } from "@/components/dataTableColumns/AdminUserTableColumns";
+import { AdminEventDataColumns } from "@/features/admin/components/AdminEventTableColumns";
+import { AdminUserDataColumns } from "@/features/admin/components/AdminUserTableColumns";
 
 export default async function Admin() {
   const activeUsers = await prisma.user.count({

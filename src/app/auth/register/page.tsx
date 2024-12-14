@@ -1,4 +1,4 @@
-import { register } from "@/actions/auth/registerAction";
+import { register } from "@/features/auth/servers/registerAction";
 
 export default async function Register() {
   return (

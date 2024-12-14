@@ -1,4 +1,4 @@
-import { login } from "@/actions/auth/loginAction";
+import { login } from "@/features/auth/servers/loginAction";
 
 export default async function Login() {
   return (

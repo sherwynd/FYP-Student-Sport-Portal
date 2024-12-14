@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { verifySession } from "@/libs/dal";
-import { logout } from "@/actions/auth/logoutAction";
+import { logout } from "@/features/auth/servers/logoutAction";
 
 export default async function Header() {
   const session = await verifySession();

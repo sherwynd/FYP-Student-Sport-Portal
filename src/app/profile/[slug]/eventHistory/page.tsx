@@ -1,6 +1,6 @@
 import { DataTable } from "@/components/ui/DataTable";
-import { UserRegisterEventColumns } from "@/components/dataTableColumns/UserRegisterEventColumns";
 import prisma from "@/databases/db";
+import { UserRegisterEventColumns } from "@/features/profile/components/UserRegisterEventColumns";
 
 type ParamProps = {
   params: Promise<{ slug: string }>;

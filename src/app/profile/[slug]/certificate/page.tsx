@@ -1,6 +1,6 @@
-import { UserCertificateColumns } from "@/components/dataTableColumns/UserCertificateColumns";
 import { DataTable } from "@/components/ui/DataTable";
 import prisma from "@/databases/db";
+import { UserCertificateColumns } from "@/features/profile/components/UserCertificateColumns";
 
 type ParamProps = {
   params: Promise<{ slug: string }>;
