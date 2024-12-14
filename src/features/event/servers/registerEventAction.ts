@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/databases/db";
-import { createReportSubmission } from "@/actions/report/createReportSubmissionAction";
+import { createReportSubmission } from "@/features/profile/servers/createReportSubmissionAction";
 
 export const registerEvent = async (eventId: string, userId: string) => {
   const existingRegistration = await prisma.eventRegistration.findFirst({

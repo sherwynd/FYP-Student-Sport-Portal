@@ -1,4 +1,4 @@
-import { resetPassword } from "@/actions/auth/resetPasswordAction";
+import { resetPassword } from "@/features/auth/servers/resetPasswordAction";
 
 type ParamProps = {
   params: Promise<{ token: string }>;

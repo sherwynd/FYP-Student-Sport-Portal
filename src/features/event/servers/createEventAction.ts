@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation";
 
 import prisma from "@/databases/db";
-import convertFileToBufferService from "@/services/file/convertFileToBufferService";
+import convertFileToBufferService from "@/features/files/services/convertFileToBufferService";
 
 export const addEvent = async (formData: FormData, imageFile: File | null) => {
   let eventData: {

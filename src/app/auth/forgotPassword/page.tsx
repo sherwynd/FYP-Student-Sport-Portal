@@ -1,4 +1,4 @@
-import { forgotPassword } from "@/actions/auth/forgotPasswordAction";
+import { forgotPassword } from "@/features/auth/servers/forgotPasswordAction";
 
 export default async function ForgotPassword() {
   return (

@@ -1,6 +1,6 @@
-import { UserReportSubmissionColumns } from "@/components/dataTableColumns/UserReportSubmissionColumns";
 import { DataTable } from "@/components/ui/DataTable";
 import prisma from "@/databases/db";
+import { UserReportSubmissionColumns } from "@/features/profile/components/UserReportSubmissionColumns";
 
 type ParamProps = {
   params: Promise<{ slug: string }>;
@@ -26,6 +26,7 @@ const UserReport = async ({ params }: ParamProps) => {
           },
         },
       },
+      ReportFile: true,
     },
   });
 
