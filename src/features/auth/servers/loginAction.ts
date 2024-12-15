@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import prisma from "@/databases/db";
 import { createSession } from "@/libs/session";
 
-export const login = async (formData: FormData) => {
+export const login = async (_previousState: unknown, formData: FormData) => {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
@@ -15,8 +15,12 @@ export const login = async (formData: FormData) => {
     },
   });
 
+  if (!email && !password) {
+    return { error: `Please fill in the form` };
+  }
+
   if (!user) {
-    throw new Error(`User ${email} not found`);
+    return { emailError: `User not found: ${email}`, fieldData: { email } };
   }
 
   const passwordValid = await compare(
@@ -25,7 +29,7 @@ export const login = async (formData: FormData) => {
   );
 
   if (!passwordValid) {
-    throw new Error(`Password is invalid`);
+    return { passwordError: `Incorrect password`, fieldData: { email } };
   }
 
   await createSession(user.id, user.role, user.slug);
