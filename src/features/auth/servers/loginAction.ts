@@ -5,9 +5,13 @@ import { redirect } from "next/navigation";
 import prisma from "@/databases/db";
 import { createSession } from "@/libs/session";
 
-export const login = async (formData: FormData) => {
+export const login = async (_previousState: unknown, formData: FormData) => {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
+
+  if (!email || !password) {
+    return { error: `Please fill in the form`, fieldData: { email, password } };
+  }
 
   const user = await prisma.user.findUnique({
     where: {
@@ -16,7 +20,10 @@ export const login = async (formData: FormData) => {
   });
 
   if (!user) {
-    throw new Error(`User ${email} not found`);
+    return {
+      emailError: `User not found: ${email}`,
+      fieldData: { email, password },
+    };
   }
 
   const passwordValid = await compare(
@@ -25,7 +32,10 @@ export const login = async (formData: FormData) => {
   );
 
   if (!passwordValid) {
-    throw new Error(`Password is invalid`);
+    return {
+      passwordError: `Incorrect password`,
+      fieldData: { email, password },
+    };
   }
 
   await createSession(user.id, user.role, user.slug);

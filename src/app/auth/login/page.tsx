@@ -1,61 +1,28 @@
-import { login } from "@/features/auth/servers/loginAction";
+import Image from "next/image";
+import LoginForm from "@/features/auth/components/LoginForm";
+import AuthForm from "@/features/auth/components/AuthForm";
 
-export default async function Login() {
+export default function Login() {
   return (
-    <div className="mx-auto max-w-md space-y-6 rounded-lg bg-white p-6 shadow-md">
-      <form action={login}>
-        <h2 className="text-center text-2xl font-semibold text-gray-800">
-          Login Form
-        </h2>
+    <AuthForm>
+      <LoginForm />
 
-        <div className="space-y-4">
-          {/* Email Input */}
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              placeholder="Enter your Email"
-              required
-              className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </div>
-
-        {/* Password Input */}
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-            required
-            className="my-3 mt-1 block w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      {/* Social Login */}
+      <div className="space-y-2">
+        <p className="text-center text-sm text-gray-500">Or login with</p>
+        <button className="flex w-full items-center justify-center space-x-2 rounded-md border border-gray-300 bg-white px-4 py-3 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-slate-200">
+          <Image
+            src="/icons8-google.svg"
+            alt="Google"
+            width={20}
+            height={20}
+            className="h-5 w-5"
           />
-        </div>
-
-        {/* Error Message (Optional, based on state) */}
-        {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
-
-        <button
-          type="submit"
-          className="w-full rounded-md bg-blue-500 py-3 text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-        >
-          Login
+          <span>Google</span>
         </button>
-      </form>
+      </div>
+
+      {/* Sign Up Link */}
 
       <div className="text-center">
         <p className="text-sm text-gray-600">
@@ -77,6 +44,6 @@ export default async function Login() {
           </a>
         </p>
       </div>
-    </div>
+    </AuthForm>
   );
 }
