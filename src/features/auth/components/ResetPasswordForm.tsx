@@ -18,7 +18,7 @@ export default function ResetPassowrdForm({
         Reset Your Password
       </h2>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {/* New Password Input */}
         <div>
           <label
@@ -33,7 +33,7 @@ export default function ResetPassowrdForm({
             id="password"
             name="password"
             placeholder="Enter new password"
-            className="my-3 mt-1 block w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -51,7 +51,7 @@ export default function ResetPassowrdForm({
             id="repeat-password"
             name="repeat-password"
             placeholder="Confirm your new password"
-            className="my-3 mt-1 block w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>
@@ -61,7 +61,7 @@ export default function ResetPassowrdForm({
       <button
         disabled={isPending}
         type="submit"
-        className="w-full rounded-md bg-blue-500 py-3 text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="my-4 w-full rounded-md bg-blue-500 py-3 text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
       >
         Reset Password
       </button>

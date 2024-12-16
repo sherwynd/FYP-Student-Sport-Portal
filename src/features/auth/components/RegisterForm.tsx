@@ -9,7 +9,7 @@ export default function RegisterForm() {
         Register Form
       </h2>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {/* Full Name Input */}
         <div>
           <label
@@ -26,11 +26,9 @@ export default function RegisterForm() {
             placeholder="Enter your Email"
             className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+          <span style={{ color: "red" }}>{data?.nameError}</span>
         </div>
-        <span style={{ color: "red" }}>{data?.nameError}</span>
-      </div>
 
-      <div className="space-y-4">
         {/* Email Input */}
         <div>
           <label
@@ -49,35 +47,35 @@ export default function RegisterForm() {
           />
         </div>
         <span style={{ color: "red" }}>{data?.emailError}</span>
-      </div>
 
-      {/* Password Input */}
-      <div>
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
+        {/* Password Input */}
+        <div>
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Password
+          </label>
+          <input
+            defaultValue={data?.fieldData?.password}
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <span style={{ color: "red" }}>{data?.error}</span>
+
+        <button
+          disabled={isPending}
+          type="submit"
+          className="my-4 w-full rounded-md bg-blue-500 py-3 text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
         >
-          Password
-        </label>
-        <input
-          defaultValue={data?.fieldData?.password}
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Enter your password"
-          className="my-3 mt-1 block w-full rounded-md border border-gray-300 px-4 py-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+          Register
+        </button>
       </div>
-
-      <span style={{ color: "red" }}>{data?.error}</span>
-
-      <button
-        disabled={isPending}
-        type="submit"
-        className="w-full rounded-md bg-blue-500 py-3 text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-      >
-        Register
-      </button>
     </form>
   );
 }
