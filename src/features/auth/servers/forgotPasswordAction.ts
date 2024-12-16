@@ -12,8 +12,15 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const forgotPassword = async (formData: FormData) => {
+export const forgotPassword = async (
+  _previousState: unknown,
+  formData: FormData,
+) => {
   const email = formData.get("email") as string;
+
+  if (!email) {
+    return { error: `Please fill in the form`, fieldData: { email } };
+  }
 
   const user = await prisma.user.findUnique({
     where: {
@@ -22,7 +29,10 @@ export const forgotPassword = async (formData: FormData) => {
   });
 
   if (!user) {
-    throw new Error(`User ${email} not found`);
+    return {
+      emailError: `Email not found: ${email}`,
+      fieldData: { email },
+    };
   }
 
   const resetToken = jwt.sign(
@@ -32,7 +42,6 @@ export const forgotPassword = async (formData: FormData) => {
       expiresIn: "1h",
     },
   );
-  console.log(resetToken);
 
   const resetLink = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/resetPassword/${resetToken}`;
 
@@ -46,4 +55,9 @@ export const forgotPassword = async (formData: FormData) => {
         <a href="${resetLink}">${resetLink}</a>
       `,
   });
+
+  return {
+    message: "The reset link have sent to your email!",
+    fieldData: { email },
+  };
 };

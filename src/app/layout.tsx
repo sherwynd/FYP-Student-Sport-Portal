@@ -24,7 +24,9 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${roboto.className} antialiased`}>
         <MainLayout>
-          <div className="bg-gray-100">{children}</div>
+          <div className="flex min-h-screen flex-col bg-gray-100">
+            {children}
+          </div>
         </MainLayout>
       </body>
     </html>
