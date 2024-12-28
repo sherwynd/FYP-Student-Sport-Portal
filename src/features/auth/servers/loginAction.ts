@@ -20,7 +20,7 @@ export const login = async (_previousState: unknown, formData: FormData) => {
 
   if (!password || password.length < 6) {
     return {
-      passwordError: "Please enter the password",
+      passwordError: "Please enter the minimum password length of 6",
       fieldData: { email, password },
     };
   }

@@ -1,6 +1,9 @@
 "use client";
 import { useActionState } from "react";
 import { register } from "@/features/auth/servers/registerAction";
+import FormField from "@/components/common/FormField";
+import { SelectField } from "@/components/common/SelectField";
+import { Button } from "@/components/ui/button";
 
 export default function RegisterForm() {
   const [data, action, isPending] = useActionState(register, undefined);
@@ -11,93 +14,58 @@ export default function RegisterForm() {
         Register Form
       </h2>
       {/* Full Name Input */}
-      <div>
-        <label
-          htmlFor="name"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Full Name
-        </label>
-        <input
+      <div className="space-y-6">
+        <FormField
           defaultValue={data?.fieldData?.name}
+          label="Full Name"
           type="text"
-          id="name"
           name="name"
-          placeholder="Enter your full name" // Adjusted placeholder
-          className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your Full Name"
+          error={data?.nameError}
         />
-        <span style={{ color: "red" }}>{data?.nameError}</span>
-      </div>
-      {/* Email Input */}
-      <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Email
-        </label>
-        <input
+        {/* Email Input */}
+        <FormField
           defaultValue={data?.fieldData?.email}
-          type="text"
-          id="email"
+          label="Email"
+          type="email"
           name="email"
-          placeholder="Enter your email"
-          className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your Email"
+          error={data?.emailError}
         />
-        <span style={{ color: "red" }}>{data?.emailError}</span>
-      </div>
-      {/* Password Input */}
-      <div>
-        <label
-          htmlFor="password"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Password
-        </label>
-        <input
+        {/* Password Input */}
+        <FormField
           defaultValue={data?.fieldData?.password}
+          label="Password"
           type="password"
-          id="password"
           name="password"
-          placeholder="Enter your password"
-          className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your Password"
+          error={data?.passwordError}
         />
-        <span style={{ color: "red" }}>{data?.passwordError}</span>
-      </div>
-      {/* Role Selection */}
-      <div>
-        <label
-          htmlFor="role"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Select your role
-        </label>
-        <select
+        {/* Role Selection */}
+        <SelectField
           defaultValue={data?.fieldData?.role}
-          id="role"
+          label="Role"
           name="role"
-          className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          options={[
+            { value: "user", label: "Non-Student" },
+            { value: "student", label: "Student" },
+            { value: "university", label: "University" },
+            { value: "organizer", label: "Organizer" },
+          ]}
+          error={data?.roleError}
+        />
+
+        <span style={{ color: "red" }}>{data?.error}</span>
+
+        {/* Register Button */}
+        <Button
+          disabled={isPending}
+          type="submit"
+          className="my-4 w-full rounded-md bg-blue-500 py-3 text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
         >
-          <option value="" disabled>
-            -- Please choose an option --
-          </option>
-          <option value="user">Non-Student</option>
-          <option value="student">Student</option>
-          <option value="university">University</option>
-          <option value="organizer">Organizer</option>
-        </select>
-        <span style={{ color: "red" }}>{data?.roleError}</span>
+          Register
+        </Button>
       </div>
-      {/* Error Message */}
-      <span style={{ color: "red" }}>{data?.error}</span>
-      {/* Register Button */}
-      <button
-        disabled={isPending}
-        type="submit"
-        className="mt-6 h-[80px] w-full rounded-md bg-blue-500 py-3 text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-      >
-        Register
-      </button>
     </form>
   );
 }

@@ -8,8 +8,8 @@ export default function Login() {
       <LoginForm />
 
       {/* Social Login */}
-      <div className="space-y-2">
-        <p className="text-center text-sm text-gray-500">Or login with</p>
+      <div className="space-y-4">
+        <p className="mb-6 text-center text-sm text-gray-500">Or Login with</p>
         <GoogleButton />
       </div>
 
@@ -32,7 +32,7 @@ export default function Login() {
               href="/auth/forgotPassword"
               className="text-blue-500 hover:underline"
             >
-              press here
+              Press here
             </a>
           </p>
         </div>
