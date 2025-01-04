@@ -1,27 +1,37 @@
-export default function ProfileId() {
-  const profileData = {
-    name: "John Doe",
-    gender: "Male",
-    address: "1234 Elm Street, Springfield, USA",
-    university: "Springfield University",
-    grade: "Sophomore",
-    height: "180 cm",
-    weight: "75 kg",
-    bloodType: "O+",
-    dob: "2002-05-15", // Date of Birth in YYYY-MM-DD format
-  };
+import prisma from "@/databases/db";
 
-  // Utility function to calculate age
-  const calculateAge = (dob: string) => {
-    const birthDate = new Date(dob);
-    const today = new Date();
-    const age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    const dayDiff = today.getDate() - birthDate.getDate();
-    return monthDiff > 0 || (monthDiff === 0 && dayDiff >= 0) ? age : age - 1;
-  };
+type ParamProps = {
+  params: Promise<{ slug: string }>;
+};
 
-  const age = calculateAge(profileData.dob); // Calculate age from DOB
+export default async function ProfileId({ params }: ParamProps) {
+  const { slug } = await params;
+
+  const data = await prisma.user.findUnique({
+    where: {
+      slug: slug,
+    },
+    select: {
+      userDetail: true,
+    },
+  });
+
+  const userDetail = data?.userDetail;
+
+  function formatDate(date: Date | null | undefined): string {
+    if (!(date instanceof Date)) return "";
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    // Pad the month and day with leading zeros if necessary
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+
+    // Return the formatted date string
+    return `${year}-${formattedMonth}-${formattedDay}`;
+  }
 
   return (
     <>
@@ -36,28 +46,31 @@ export default function ProfileId() {
           </h2>
           <div className="grid grid-cols-2 gap-4 text-gray-600">
             <div>
-              <span className="font-bold">Gender:</span> {profileData.gender}
+              <span className="font-bold">Gender: </span>
+              {userDetail?.gender || ""}{" "}
             </div>
             <div>
-              <span className="font-bold">Date of Birth:</span>{" "}
-              {profileData.dob}
+              <span className="font-bold">Date of Birth: </span>{" "}
+              {formatDate(userDetail?.dateOfBirth) || ""}
             </div>
             <div>
-              <span className="font-bold">Age:</span> {age} years
+              <span className="font-bold">Age: </span> {userDetail?.age || ""}
+              years
             </div>
             <div className="col-span-2">
-              <span className="font-bold">Address:</span> {profileData.address}
+              <span className="font-bold">Address: </span>{" "}
+              {userDetail?.address || ""}
             </div>
           </div>
         </div>
 
         {/* Education Info */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-700">Education</h2>
+          <h2 className="text-xl font-semibold text-gray-700">Education </h2>
           <div className="mt-2 text-gray-600">
             <p>
-              <span className="font-bold">University/School:</span>{" "}
-              {profileData.university}
+              <span className="font-bold">University/School: </span>{" "}
+              {userDetail?.university || ""}
             </p>
           </div>
         </div>
@@ -69,14 +82,16 @@ export default function ProfileId() {
           </h2>
           <div className="mt-2 grid grid-cols-2 gap-4 text-gray-600">
             <div>
-              <span className="font-bold">Height:</span> {profileData.height}
+              <span className="font-bold">Height: </span>{" "}
+              {userDetail?.height || ""}
             </div>
             <div>
-              <span className="font-bold">Weight:</span> {profileData.weight}
+              <span className="font-bold">Weight: </span>{" "}
+              {userDetail?.height || ""}
             </div>
             <div>
-              <span className="font-bold">Blood Type:</span>{" "}
-              {profileData.bloodType}
+              <span className="font-bold">Blood Type: </span>{" "}
+              {userDetail?.bloodType}
             </div>
           </div>
         </div>

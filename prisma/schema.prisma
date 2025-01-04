@@ -33,16 +33,20 @@ model User {
 
 model UserDetail {
     id          String    @id @default(auto()) @map("_id") @db.ObjectId
-    gender      String?
-    age         Int?
+    bio         String? // A short description or bio for the user
     phoneNumber String?
+    gender      Gender?
+    dateOfBirth DateTime?
+    age         Int?
     address     String?
     city        String?
     state       String?
-    country     String?
     zipCode     String?
-    bio         String? // A short description or bio for the user
-    dateOfBirth DateTime?
+    country     String?
+    university  String?
+    height      String?
+    weight      String?
+    bloodType   String?
     createdAt   DateTime  @default(now())
     updatedAt   DateTime  @updatedAt
     user        User      @relation(fields: [userId], references: [id]) // Back-reference to the User
@@ -199,4 +203,9 @@ enum Role {
     student
     university
     industry
+}
+
+enum Gender {
+    male
+    female
 }
