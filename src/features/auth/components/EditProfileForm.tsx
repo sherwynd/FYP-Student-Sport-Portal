@@ -11,6 +11,7 @@ type Gender = "male" | "female" | null;
 
 type userDetailDataType = {
   id: string;
+  slug: string;
   userDetail?: {
     id: string;
     gender?: Gender;
@@ -42,6 +43,7 @@ export default function EditProfileForm({
         name="userDetailId"
         value={userData?.userDetail?.id || ""}
       />
+      <input type="hidden" name="slug" value={userData?.slug || ""} />
 
       <div className="grid w-full items-start gap-2 p-4">
         <h2 className="mt-2 text-xl font-semibold text-gray-700">
@@ -59,7 +61,12 @@ export default function EditProfileForm({
             ]}
             error={data?.genderError}
           />
-          <FormField label="Date Of Birth" type="date" name="dateOfBirth" />
+          <FormField
+            label="Date Of Birth"
+            type="date"
+            name="dateOfBirth"
+            error={data?.dateOfBirthError}
+          />
         </div>
 
         <FormField
@@ -103,11 +110,22 @@ export default function EditProfileForm({
           />
         </div>
 
-        <FormField
+        <SelectField
           defaultValue={detail?.bloodType}
           label="Blood Type"
-          type="text"
           name="bloodType"
+          placeholder="Select your Blood Type"
+          options={[
+            { value: "A+", label: "A+" },
+            { value: "B+", label: "B+" },
+            { value: "AB+", label: "AB+" },
+            { value: "O+", label: "O+" },
+            { value: "A-", label: "A-" },
+            { value: "B-", label: "B-" },
+            { value: "AB-", label: "AB-" },
+            { value: "O-", label: "O-" },
+          ]}
+          error={data?.genderError}
         />
 
         <Button>Submit</Button>

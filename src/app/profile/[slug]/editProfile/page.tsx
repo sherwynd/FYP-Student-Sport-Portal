@@ -20,6 +20,7 @@ const EditProfile = async ({ params }: ParamProps) => {
     },
     select: {
       id: true,
+      slug: true,
       userDetail: true,
     },
   });
