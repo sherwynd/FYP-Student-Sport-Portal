@@ -1,5 +1,5 @@
 import prisma from "@/databases/db";
-import EditProfileForm from "@/features/auth/components/EditProfileForm";
+import HandleProfileForm from "@/features/auth/components/HandleProfileForm";
 import { verifySession } from "@/libs/dal";
 
 // import prisma from "@/databases/db";
@@ -24,16 +24,12 @@ const EditProfile = async ({ params }: ParamProps) => {
       userDetail: true,
     },
   });
-  //Need to add error Page
-  //provide the slug that fetch the info if detail exist will go to edit else/go create
-
-  console.log(data);
 
   return (
     <>
       {profileData.canEdit ? (
         <div className="user-data-table-container">
-          <EditProfileForm userData={data} />
+          <HandleProfileForm userData={data} />
         </div>
       ) : (
         <>Unauthorized access to user detail edit.</>

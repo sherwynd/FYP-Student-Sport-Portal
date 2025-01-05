@@ -3,7 +3,7 @@ import { useActionState } from "react";
 
 import { Button } from "@/components/ui/button";
 
-import { editProfile } from "../servers/editProfileAction";
+import { handleProfile } from "../servers/handleProfileAction";
 import FormField from "@/components/common/FormField";
 import { SelectField } from "@/components/common/SelectField";
 
@@ -25,12 +25,12 @@ type userDetailDataType = {
   } | null;
 };
 
-export default function EditProfileForm({
+export default function HandleProfileForm({
   userData,
 }: {
   userData: userDetailDataType | null;
 }) {
-  const [data, action, _isPending] = useActionState(editProfile, undefined);
+  const [data, action, _isPending] = useActionState(handleProfile, undefined);
   const detail = userData?.userDetail;
   return (
     <form action={action}>

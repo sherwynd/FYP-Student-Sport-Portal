@@ -2,7 +2,7 @@
 import prisma from "@/databases/db";
 import { redirect } from "next/navigation";
 
-export const editProfile = async (
+export const handleProfile = async (
   _previousState: unknown,
   formData: FormData,
 ) => {
