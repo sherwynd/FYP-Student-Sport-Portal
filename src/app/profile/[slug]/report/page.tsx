@@ -26,7 +26,11 @@ const UserReport = async ({ params }: ParamProps) => {
           },
         },
       },
-      ReportFile: true,
+      user: {
+        select: {
+          slug: true,
+        },
+      },
     },
   });
 
