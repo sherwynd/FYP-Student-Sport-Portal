@@ -18,6 +18,10 @@ type EventCardProps = {
   };
 };
 
+function truncateText(text: string, maxLength: number) {
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+}
+
 export default function EventCard({ event }: EventCardProps) {
   return (
     <>
@@ -46,7 +50,9 @@ export default function EventCard({ event }: EventCardProps) {
             <div className="p-6">
               <h2 className="mb-2 text-lg font-bold">{event.title}</h2>
               <p className="mb-4 text-sm text-gray-700">
-                {event.eventCertificate?.filename}
+                {event.eventCertificate
+                  ? truncateText(event.eventCertificate.filename, 40)
+                  : ""}
               </p>
               <p className="text-sm text-gray-500">
                 Credit Hour: {event.creditHour}

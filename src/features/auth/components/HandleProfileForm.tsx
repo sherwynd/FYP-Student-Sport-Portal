@@ -84,11 +84,175 @@ export default function HandleProfileForm({
         />
 
         <h2 className="mt-2 text-xl font-semibold text-gray-700">Education</h2>
-        <FormField
+        <SelectField
           defaultValue={detail?.university}
           label="University"
-          type="text"
           name="university"
+          options={[
+            { value: "Other University", label: "Other University" },
+            {
+              value: "Al-Madinah International University",
+              label: "Al-Madinah International University",
+            },
+            { value: "Asia e University", label: "Asia e University" },
+            {
+              value: "Binary University of Management and Entrepreneurship",
+              label: "Binary University of Management and Entrepreneurship",
+            },
+            {
+              value: "City University of Malaysia",
+              label: "City University of Malaysia",
+            },
+            {
+              value: "DRB-HICOM University of Automotive Malaysia",
+              label: "DRB-HICOM University of Automotive Malaysia",
+            },
+            { value: "HELP University", label: "HELP University" },
+            {
+              value: "INTI International University",
+              label: "INTI International University",
+            },
+            {
+              value: "Malaysia University of Science and Technology",
+              label: "Malaysia University of Science and Technology",
+            },
+            {
+              value: "Management and Science University",
+              label: "Management and Science University",
+            },
+            {
+              value: "Manipal International University",
+              label: "Manipal International University",
+            },
+            { value: "Multimedia University", label: "Multimedia University" },
+            { value: "Perdana University", label: "Perdana University" },
+            {
+              value: "Quest International University",
+              label: "Quest International University",
+            },
+            { value: "Sunway University", label: "Sunway University" },
+            { value: "Taylor's University", label: "Taylor's University" },
+            { value: "UCSI University", label: "UCSI University" },
+            {
+              value: "UNITAR International University",
+              label: "UNITAR International University",
+            },
+            { value: "Universiti AIMST", label: "Universiti AIMST" },
+            {
+              value: "Universiti Antarabangsa AlBukhary",
+              label: "Universiti Antarabangsa AlBukhary",
+            },
+            {
+              value: "Universiti Islam Antarabangsa Malaysia",
+              label: "Universiti Islam Antarabangsa Malaysia",
+            },
+            {
+              value: "Universiti Kebangsaan Malaysia",
+              label: "Universiti Kebangsaan Malaysia",
+            },
+            {
+              value: "Universiti Kuala Lumpur",
+              label: "Universiti Kuala Lumpur",
+            },
+            { value: "Universiti Malaya", label: "Universiti Malaya" },
+            {
+              value: "Universiti Malaya-Wales",
+              label: "Universiti Malaya-Wales",
+            },
+            {
+              value: "Universiti Malaysia Kelantan",
+              label: "Universiti Malaysia Kelantan",
+            },
+            {
+              value: "Universiti Malaysia Pahang Al-Sultan Abdullah",
+              label: "Universiti Malaysia Pahang Al-Sultan Abdullah",
+            },
+            {
+              value: "Universiti Malaysia Perlis",
+              label: "Universiti Malaysia Perlis",
+            },
+            {
+              value: "Universiti Malaysia Sabah",
+              label: "Universiti Malaysia Sabah",
+            },
+            {
+              value: "Universiti Malaysia Sarawak",
+              label: "Universiti Malaysia Sarawak",
+            },
+            {
+              value: "Universiti Malaysia Terengganu",
+              label: "Universiti Malaysia Terengganu",
+            },
+            {
+              value: "Universiti Pendidikan Sultan Idris",
+              label: "Universiti Pendidikan Sultan Idris",
+            },
+            {
+              value: "Universiti Perubatan Antarabangsa",
+              label: "Universiti Perubatan Antarabangsa",
+            },
+            {
+              value: "Universiti Pertahanan Nasional Malaysia",
+              label: "Universiti Pertahanan Nasional Malaysia",
+            },
+            {
+              value: "Universiti Putra Malaysia",
+              label: "Universiti Putra Malaysia",
+            },
+            {
+              value: "Universiti Sains Islam Malaysia",
+              label: "Universiti Sains Islam Malaysia",
+            },
+            {
+              value: "Universiti Sains Malaysia",
+              label: "Universiti Sains Malaysia",
+            },
+            { value: "Universiti Selangor", label: "Universiti Selangor" },
+            {
+              value: "Universiti Sultan Zainal Abidin",
+              label: "Universiti Sultan Zainal Abidin",
+            },
+            {
+              value: "Universiti Teknologi Kreatif Limkokwing",
+              label: "Universiti Teknologi Kreatif Limkokwing",
+            },
+            {
+              value: "Universiti Teknologi MARA",
+              label: "Universiti Teknologi MARA",
+            },
+            {
+              value: "Universiti Teknologi Malaysia",
+              label: "Universiti Teknologi Malaysia",
+            },
+            {
+              value: "Universiti Teknologi Petronas",
+              label: "Universiti Teknologi Petronas",
+            },
+            {
+              value: "Universiti Teknikal Malaysia Melaka",
+              label: "Universiti Teknikal Malaysia Melaka",
+            },
+            {
+              value: "Universiti Tenaga Nasional",
+              label: "Universiti Tenaga Nasional",
+            },
+            {
+              value: "Universiti Tunku Abdul Rahman",
+              label: "Universiti Tunku Abdul Rahman",
+            },
+            {
+              value: "Universiti Tun Abdul Razak",
+              label: "Universiti Tun Abdul Razak",
+            },
+            {
+              value: "Universiti Tun Hussein Onn Malaysia",
+              label: "Universiti Tun Hussein Onn Malaysia",
+            },
+            {
+              value: "Universiti Utara Malaysia",
+              label: "Universiti Utara Malaysia",
+            },
+          ]}
           error={data?.universityError}
         />
 

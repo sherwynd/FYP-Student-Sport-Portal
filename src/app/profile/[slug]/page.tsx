@@ -87,7 +87,7 @@ export default async function ProfileId({ params }: ParamProps) {
             </div>
             <div>
               <span className="font-bold">Weight: </span>{" "}
-              {userDetail?.height || ""}
+              {userDetail?.weight || ""}
             </div>
             <div>
               <span className="font-bold">Blood Type: </span>{" "}

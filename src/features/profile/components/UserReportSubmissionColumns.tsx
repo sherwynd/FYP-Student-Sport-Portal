@@ -15,24 +15,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 type UserReportSubmissionData = {
   id: string;
-  userId: string;
-  eventId: string;
   status: string;
   SubmittedAt?: Date | null;
   eventRegistrationId: string;
   createdAt: Date;
   updatedAt: Date;
   eventRegistration: {
+    user: {
+      slug: String;
+    };
     event: {
       title: string;
     };
-  };
-  user: {
-    slug: String;
   };
 };
 
@@ -68,26 +64,9 @@ export const UserReportSubmissionColumns: ColumnDef<UserReportSubmissionData>[] 
         );
       },
     },
-    // {
-    //   accessorKey: "SubmittedAt",
-    //   header: ({ column }) => {
-    //     return (
-    //       <Button
-    //         variant="ghost"
-    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //       >
-    //         Submit Date
-    //         <ArrowUpDown className="ml-2 h-4 w-4" />
-    //       </Button>
-    //     );
-    //   },
-    // },
-
-    // Data Action
     {
       id: "actions",
       cell: ({ row }) => {
-        console.log(row.original);
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -98,11 +77,10 @@ export const UserReportSubmissionColumns: ColumnDef<UserReportSubmissionData>[] 
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              {/* Replace FileUploadPopup with Link */}
               <Link
-                href={`/profile/${row.original.user.slug}/report/${row.original.id}`}
+                href={`/profile/${row.original.eventRegistration.user.slug}/report/${row.original.id}`}
               >
-                <Button variant="ghost">Go to Report Page</Button>
+                <Button variant="ghost">Submit Report</Button>
               </Link>
             </DropdownMenuContent>
           </DropdownMenu>

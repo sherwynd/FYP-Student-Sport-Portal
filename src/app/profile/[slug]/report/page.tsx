@@ -19,16 +19,16 @@ const UserReport = async ({ params }: ParamProps) => {
     include: {
       eventRegistration: {
         select: {
+          user: {
+            select: {
+              slug: true,
+            },
+          },
           event: {
             select: {
               title: true,
             },
           },
-        },
-      },
-      user: {
-        select: {
-          slug: true,
         },
       },
     },

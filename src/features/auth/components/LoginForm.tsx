@@ -20,12 +20,16 @@ export default function LoginForm() {
           type="email"
           name="email"
           placeholder="Enter your Email"
+          error={data?.emailError}
+          defaultValue={data?.fieldData?.email}
         />
         <FormField
           label="Password"
           type="password"
           name="password"
           placeholder="Enter your Password"
+          error={data?.passwordError}
+          defaultValue={data?.fieldData?.password}
         />
 
         <span style={{ color: "red" }}>{data?.error}</span>

@@ -37,12 +37,6 @@ const UserCertificate = async ({ params }: ParamProps) => {
 
     const base64Data = certificateData.toString("base64");
     const downloadUrl = `data:${contentType};base64,${base64Data}`;
-
-    // console.log("Generated Download URL:", downloadUrl);
-
-    // const blob = new Blob([certificateData], { type: contentType }); // Create Blob with the content type
-    // const blobUrl = URL.createObjectURL(blob); // Generate Blob URL
-    // console.log("Generated Blob URL:", blobUrl); // Log the Blob URL for debugging
     return downloadUrl;
   };
 
