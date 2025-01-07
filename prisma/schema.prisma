@@ -111,6 +111,7 @@ model Event {
     description        String
     courseLevel        String
     creditHour         Int
+    numberOfPeople     Int?
     type               String?
     status             String?
     eventImageId       String?             @unique @db.ObjectId

@@ -1,10 +1,11 @@
 import prisma from "@/databases/db";
 
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { verifySession } from "@/libs/dal";
-import { registerEvent } from "../../../features/event/servers/registerEventAction";
 import DeleteAlertBox from "@/features/event/components/DeleteAlertBox";
+import RegisterServiceButton from "@/features/event/components/RegisterServiceButton";
 
 type ParamProps = {
   params: Promise<{ slug: string }>;
@@ -23,11 +24,6 @@ const EventId = async ({ params }: ParamProps) => {
     },
   });
 
-  const registerEventWithId = registerEvent.bind(
-    null,
-    eventIdData?.id as string,
-    currentUser?.userId as string,
-  );
   return (
     <section className="flex flex-col items-center">
       {/* Image Section */}
@@ -51,8 +47,20 @@ const EventId = async ({ params }: ParamProps) => {
         )}
       </div>
 
+      {/* Admin Actions */}
+      {(currentUser?.role === "admin" || "organizer") && (
+        <div className="flex w-full max-w-4xl justify-between px-4 py-6">
+          <Link href={`/event/editEvent/${eventIdData?.id}`}>
+            <button className="rounded bg-green-500 px-4 py-2 text-white transition hover:bg-green-600">
+              Edit Event
+            </button>
+          </Link>
+          <DeleteAlertBox id={eventIdData?.id as string} />
+        </div>
+      )}
+
       {/* Title & Description */}
-      <div className="w-full max-w-4xl px-4 py-6">
+      <div className="w-full max-w-4xl px-4 pb-6">
         <h1 className="text-2xl font-bold text-gray-800">
           {eventIdData?.title}
         </h1>
@@ -60,39 +68,52 @@ const EventId = async ({ params }: ParamProps) => {
       </div>
 
       {/* Details Section */}
-      <div className="grid w-full max-w-4xl grid-cols-1 gap-4 px-4 py-6 sm:grid-cols-3">
-        <div className="rounded-lg bg-white p-4 text-center shadow">
-          <h2 className="text-lg font-semibold text-gray-700">Certificate</h2>
-          <p className="text-gray-600">
-            {eventIdData?.eventCertificate?.filename || "N/A"}
+      <div className="w-full max-w-4xl space-y-4 px-4 py-6">
+        <div className="rounded-lg bg-white p-4 shadow">
+          <h2 className="flex justify-center text-lg font-semibold text-gray-700">
+            Event Course Hour
+          </h2>
+          <p className="flex justify-center text-gray-600">
+            {eventIdData?.creditHour || "No credit hours provided"}
           </p>
         </div>
-        <div className="rounded-lg bg-white p-4 text-center shadow">
-          <h2 className="text-lg font-semibold text-gray-700">Credit Hours</h2>
-          <p className="text-gray-600">{eventIdData?.creditHour || "0"}</p>
+        <div className="rounded-lg bg-white p-4 shadow">
+          <h2 className="flex justify-center text-lg font-semibold text-gray-700">
+            The Course
+          </h2>
+          <p className="flex justify-center text-gray-600">
+            {eventIdData?.courseLevel || "No course level specified"}
+          </p>
         </div>
-        <div className="rounded-lg bg-white p-4 text-center shadow">
-          <h2 className="text-lg font-semibold text-gray-700">Course Level</h2>
-          <p className="text-gray-600">{eventIdData?.courseLevel || "N/A"}</p>
+        <div className="rounded-lg bg-white p-4 shadow">
+          <h2 className="flex justify-center text-lg font-semibold text-gray-700">
+            Certificate You Receive
+          </h2>
+          <p className="flex justify-center text-gray-600">
+            {eventIdData?.eventCertificate?.filename ||
+              "No certificate provided"}
+          </p>
         </div>
+        {eventIdData?.numberOfPeople && eventIdData?.numberOfPeople > 0 ? (
+          <div className="rounded-lg bg-white p-4 shadow">
+            <h2 className="flex justify-center text-lg font-semibold text-gray-700">
+              Service Required
+            </h2>
+            <p className="flex justify-center text-gray-600">
+              {`Number of People: ${eventIdData.numberOfPeople}`}
+            </p>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
-      {currentUser?.role === "admin" && (
-        <>
-          <Link href={`/event/editEvent/${eventIdData?.id}`}>
-            <button className="mb-4 rounded bg-green-500 px-4 py-2 text-white transition hover:bg-green-600">
-              Edit Event
-            </button>
-          </Link>
-          <DeleteAlertBox id={eventIdData?.id as string} />
-        </>
-      )}
-      <div>
-        <form action={registerEventWithId}>
-          <button className="mb-4 rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600">
-            Register Event
-          </button>
-        </form>
-      </div>
+
+      {/* Action Buttons */}
+      <RegisterServiceButton
+        userId={String(currentUser?.userId ?? "")}
+        eventId={eventIdData?.id ?? ""}
+        numberOfPeople={eventIdData?.numberOfPeople ?? 0}
+      />
     </section>
   );
 };

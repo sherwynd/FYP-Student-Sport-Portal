@@ -177,6 +177,8 @@ export const addEvent = async (_previousState: unknown, formData: FormData) => {
         description: description,
         courseLevel: courseLevel,
         creditHour: creditHour,
+        numberOfPeople: numberOfPeople,
+        type: eventType,
         eventImageId: eventImageId,
         eventCertificateId: eventCertificateId, // Associating event certificate ID (nullable)
       },

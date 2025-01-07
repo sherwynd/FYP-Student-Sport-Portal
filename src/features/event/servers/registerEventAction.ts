@@ -3,16 +3,24 @@
 import prisma from "@/databases/db";
 import { createReportSubmission } from "@/features/profile/servers/createReportSubmissionAction";
 
-export const registerEvent = async (eventId: string, userId: string) => {
+export const registerEvent = async (
+  _previousState: unknown,
+  formData: FormData,
+) => {
+  const userId = formData.get("userId") as string;
+  const eventId = formData.get("eventId") as string;
+  const participationType = formData.get("participationType") as string;
+
   const existingRegistration = await prisma.eventRegistration.findFirst({
     where: {
-      userId,
       eventId,
     },
   });
 
   if (existingRegistration) {
-    throw new Error("User already registered for this event.");
+    return {
+      error: "User already registered for this event.",
+    };
   }
 
   let eventRegistrationId;
@@ -21,18 +29,18 @@ export const registerEvent = async (eventId: string, userId: string) => {
       data: {
         userId,
         eventId,
+        participationType,
       },
     });
     eventRegistrationId = data.id;
 
-    createReportSubmission(eventId, userId, eventRegistrationId);
+    createReportSubmission(eventId, userId);
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: { isActive: true },
     });
 
-    // Only update if not already active
     if (!user?.isActive) {
       await prisma.user.update({
         where: {
@@ -46,6 +54,8 @@ export const registerEvent = async (eventId: string, userId: string) => {
   } catch (error) {
     console.error(error, "Error registering event");
   }
-};
 
-export const unregisterEvent = async () => {};
+  return {
+    message: "Successfully registered/apply the event.",
+  };
+};

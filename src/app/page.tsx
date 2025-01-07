@@ -77,7 +77,7 @@ export default async function Home() {
     <div className="mx-auto w-full max-w-[1440px] px-4 pt-4">
       {/* Conditionally Render Beginner Courses */}
       {beginnerEvents.length > 0 && (
-        <section>
+        <section className="py-4">
           <h1 className="mb-6 text-center text-4xl font-bold text-gray-800">
             Beginner Courses
           </h1>
@@ -93,7 +93,7 @@ export default async function Home() {
 
       {/* Conditionally Render Intermediate Courses */}
       {intermediateEvents.length > 0 && (
-        <section>
+        <section className="py-4">
           <h1 className="mb-6 text-center text-4xl font-bold text-gray-800">
             Intermediate Courses
           </h1>
@@ -109,7 +109,7 @@ export default async function Home() {
 
       {/* Conditionally Render Professional Courses */}
       {professionalEvents.length > 0 && (
-        <section>
+        <section className="py-4">
           <h1 className="mb-6 text-center text-4xl font-bold text-gray-800">
             Professional Courses
           </h1>
@@ -125,7 +125,7 @@ export default async function Home() {
 
       {/* Conditionally Render Competitions */}
       {competitionEvents.length > 0 && (
-        <section>
+        <section className="py-4">
           <h1 className="mb-6 text-center text-4xl font-bold text-gray-800">
             Competitions
           </h1>
@@ -141,7 +141,7 @@ export default async function Home() {
 
       {/* Conditionally Render Workshops */}
       {workshopEvents.length > 0 && (
-        <section>
+        <section className="py-4">
           <h1 className="mb-6 text-center text-4xl font-bold text-gray-800">
             Workshops
           </h1>
