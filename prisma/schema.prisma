@@ -26,9 +26,9 @@ model User {
     health             Health[]
     eventRegistrations EventRegistration[] // Relation to track event registrations
     sessions           Session[]
-    // Event              Event[]
     ReportSubmission   ReportSubmission[]
     userDetail         UserDetail?         @relation
+    RiskEvaluation     RiskEvaluation?
 }
 
 model UserDetail {
@@ -117,9 +117,7 @@ model Event {
     eventImage         EventImage?         @relation(fields: [eventImageId], references: [id], onDelete: Cascade)
     eventCertificateId String?             @unique @db.ObjectId
     eventCertificate   EventCertificate?   @relation(fields: [eventCertificateId], references: [id], onDelete: Cascade)
-    eventRegistrations EventRegistration[]
-    // authorId             String              @db.ObjectId
-    // author             User                @relation(fields: [authorId], references: [id])
+    eventRegistrations EventRegistration[] // Links to registrations
     createdAt          DateTime            @default(now())
     updatedAt          DateTime            @updatedAt
 }
@@ -148,29 +146,28 @@ model EventRegistration {
     id                String            @id @default(auto()) @map("_id") @db.ObjectId
     userId            String            @db.ObjectId
     eventId           String            @db.ObjectId
-    status            String            @default("new") // Status like "new," "enrolled," or "completed"
+    status            String            @default("new")
     participationType String            @default("participant") // "participant" or "helper"
     createdAt         DateTime          @default(now())
     updatedAt         DateTime          @updatedAt
     user              User              @relation(fields: [userId], references: [id])
-    event             Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
-    reportSubmission  ReportSubmission?
+    event             Event             @relation(fields: [eventId], references: [id])
+    reportSubmission  ReportSubmission? @relation // Made optional
 
     @@unique([userId, eventId]) // Ensures a user can register for an event only once
 }
 
 model ReportSubmission {
     id                  String            @id @default(auto()) @map("_id") @db.ObjectId
-    userId              String            @db.ObjectId //foreign key
-    eventId             String            @db.ObjectId //foreign key
-    submittedAt         DateTime?
     status              String // "Submitted" or "Not Submitted"
+    submittedAt         DateTime? // Timestamp of submission
     createdAt           DateTime          @default(now())
     updatedAt           DateTime          @updatedAt
-    user                User              @relation(fields: [userId], references: [id])
-    ReportFile          ReportFile?       @relation()
+    reportFile          ReportFile?       @relation()
     eventRegistration   EventRegistration @relation(fields: [eventRegistrationId], references: [id], onDelete: Cascade)
-    eventRegistrationId String            @unique @db.ObjectId
+    eventRegistrationId String            @unique @db.ObjectId // Required side holds the constraints
+    User                User?             @relation(fields: [userId], references: [id])
+    userId              String?           @db.ObjectId
 }
 
 model ReportFile {
@@ -178,7 +175,9 @@ model ReportFile {
     filename           String
     contentType        String
     data               Bytes
-    reportSubmission   ReportSubmission @relation(fields: [reportSubmissionId], references: [id])
+    createdAt          DateTime         @default(now())
+    updatedAt          DateTime         @updatedAt
+    reportSubmission   ReportSubmission @relation(fields: [reportSubmissionId], references: [id], onDelete: Cascade)
     reportSubmissionId String           @unique @db.ObjectId
 }
 
@@ -195,6 +194,24 @@ model Health {
     updatedAt     DateTime @updatedAt
     User          User?    @relation(fields: [userId], references: [id])
     userId        String?  @db.ObjectId
+}
+
+model RiskEvaluation {
+    id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+    overallScore       Int?
+    riskIndex          Int?
+    neckRiskIndex      Int?
+    shoulderRiskIndex  Int?
+    lowerLimbRiskIndex Int?
+    pelvicRiskIndex    Int?
+    torsoRiskIndex     Int?
+    mobility           Int?
+    stability          Int?
+    symmetry           Int?
+    createdAt          DateTime @default(now())
+    updatedAt          DateTime @updatedAt
+    User               User?    @relation(fields: [userId], references: [id])
+    userId             String?  @unique @db.ObjectId
 }
 
 enum Role {
