@@ -3,6 +3,7 @@
 import prisma from "@/databases/db";
 
 export const createReportSubmission = async (
+  eventId: string,
   userId: string,
   eventRegistrationId: string,
 ) => {
@@ -10,6 +11,7 @@ export const createReportSubmission = async (
     await prisma.reportSubmission.create({
       data: {
         userId,
+        eventId,
         eventRegistrationId,
         status: "Not Submitted",
       },

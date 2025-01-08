@@ -4,81 +4,121 @@ import convertFileToBufferService from "@/features/files/services/convertFileToB
 import { redirect } from "next/navigation";
 
 export const editEvent = async (
+  _previousState: unknown,
   formData: FormData,
-  imageFile: File | null,
-  eventId: string,
 ) => {
-  const existingEvent = await prisma.event.findUnique({
-    where: { id: eventId },
-    include: { eventImage: true },
+  const eventImage = formData.get("eventImage") as File;
+  const title = formData.get("title") as string;
+  const slug = (formData.get("title") as string)
+    .replace(/\s+/g, "-")
+    .toLowerCase();
+  const description = formData.get("description") as string;
+  const courseLevel = formData.get("courseLevel") as string;
+  const creditHour = Number(formData.get("creditHour"));
+  const certificate = formData.get("certificate") as File;
+  const eventId = formData.get("eventId") as string;
+  let eventImageId = formData.get("eventImageId") as string;
+  const eventCertificateId = formData.get("eventCertificateId") as string;
+  const eventType = formData.get("eventType") as string;
+  const numberOfPeople = Number(formData.get("numberOfPeople"));
+
+  if (!title) {
+    return {
+      titleError: "Title is required",
+      fieldData: {
+        title,
+        description,
+        courseLevel,
+        creditHour,
+        certificate,
+        numberOfPeople,
+        eventType,
+      },
+    };
+  }
+
+  const matchTitle = await prisma.event.findFirst({
+    where: {
+      title: title,
+      NOT: {
+        id: eventId, // Exclude the current event by its ID
+      },
+    },
   });
 
-  if (!existingEvent) {
-    throw new Error("Event not found.");
+  if (matchTitle) {
+    return {
+      titleError: "Title Event has been used",
+      fieldData: {
+        title,
+        description,
+        courseLevel,
+        creditHour,
+        certificate,
+        numberOfPeople,
+        eventType,
+      },
+    };
   }
 
-  let eventData: {
-    title: string;
-    slug: string;
-    description: string;
-    courseLevel: string;
-    creditHour: number;
-    certificate: File;
-    eventImageId: string | null;
-    eventCertificateId: string | null;
-  } = {
-    title: formData.get("title") as string,
-    slug: (formData.get("title") as string).replace(/\s+/g, "-").toLowerCase(),
-    description: formData.get("description") as string,
-    courseLevel: formData.get("courseLevel") as string,
-    creditHour: Number(formData.get("creditHour")),
-    certificate: formData.get("certificate") as File,
-    eventImageId: existingEvent.eventImageId || null,
-    eventCertificateId: existingEvent.eventCertificateId || null,
-  };
-
-  console.log(eventData, imageFile, eventId);
-
-  if (
-    !eventData.title ||
-    !eventData.slug ||
-    !eventData.description ||
-    !eventData.courseLevel ||
-    !eventData.creditHour
-  ) {
-    throw new Error("Required fields are missing.");
+  if (creditHour && creditHour < 1) {
+    return {
+      creditHourError: "Credit Level cannot be lower than 0",
+      fieldData: {
+        title,
+        description,
+        courseLevel,
+        creditHour,
+        certificate,
+        numberOfPeople,
+        eventType,
+      },
+    };
   }
 
-  if (imageFile) {
+  if (numberOfPeople && numberOfPeople < 0) {
+    return {
+      numberOfPeopleError: "Number of people cannot be lower than 0",
+      fieldData: {
+        title,
+        description,
+        courseLevel,
+        creditHour,
+        certificate,
+        numberOfPeople,
+        eventType,
+      },
+    };
+  }
+
+  if (eventImage && certificate.size > 0 && certificate.name !== "undefined") {
     try {
-      const imageBuffer = await convertFileToBufferService(imageFile);
-
-      console.log("Image Buffer:", imageBuffer);
+      const imageBuffer = await convertFileToBufferService(eventImage);
 
       if (!imageBuffer) {
         throw new Error("imageBuffer are missing.");
       }
-      if (existingEvent.eventImageId) {
+      if (eventImageId) {
         const imageRecord = await prisma.eventImage.update({
           where: {
-            id: existingEvent.eventImageId,
+            id: eventImageId,
           },
           data: {
-            filename: imageFile.name,
-            contentType: imageFile.type,
+            filename: eventImage.name,
+            contentType: eventImage.type,
             data: imageBuffer,
           },
         });
-        eventData.eventImageId = imageRecord.id;
+        eventImageId = imageRecord.id;
       } else {
         const imageRecord = await prisma.eventImage.create({
           data: {
-            filename: imageFile.name,
-            contentType: imageFile.type,
+            filename: eventImage.name,
+            contentType: eventImage.type,
             data: imageBuffer,
           },
         });
-        eventData.eventImageId = imageRecord.id;
+        eventImageId = imageRecord.id;
       }
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -86,57 +126,52 @@ export const editEvent = async (
     }
   }
 
-  if (eventData.certificate) {
+  if (certificate && certificate.size > 0 && certificate.name !== "undefined") {
     try {
-      const certificateBuffer = await convertFileToBufferService(
-        eventData.certificate,
-      );
+      const certificateBuffer = await convertFileToBufferService(certificate);
 
       if (!certificateBuffer) {
         throw new Error("certificateBuffer are missing.");
       }
 
-      if (existingEvent.eventCertificateId) {
-        const certificateRecord = await prisma.eventCertificate.update({
-          where: { id: existingEvent.eventCertificateId },
-          data: {
-            filename: eventData.certificate.name,
-            contentType: eventData.certificate.type,
-            data: certificateBuffer,
-          },
-        });
-        eventData.eventCertificateId = certificateRecord.id;
-      } else {
-        const certificateRecord = await prisma.eventCertificate.create({
-          data: {
-            filename: eventData.certificate.name,
-            contentType: eventData.certificate.type,
-            data: certificateBuffer,
-          },
-        });
-        eventData.eventCertificateId = certificateRecord.id;
-      }
+      await prisma.eventCertificate.update({
+        where: { id: eventCertificateId },
+        data: {
+          filename: certificate.name,
+          contentType: certificate.type,
+          data: certificateBuffer,
+        },
+      });
     } catch (error) {
       console.error("Error uploading certificate:", error);
       throw new Error("Failed to upload certificate.");
     }
   }
 
-  console.log("Event Data Before Update:", eventData);
+  const updateData: any = {};
 
-  if (!eventData || Object.keys(eventData).length === 0) {
-    throw new Error("Event data is empty or invalid.");
-  }
+  // Conditionally add fields to the update object
+  if (description) updateData.description = description;
+  if (courseLevel) updateData.courseLevel = courseLevel;
+  if (creditHour > 0) updateData.creditHour = creditHour;
+  if (eventType) updateData.type = eventType;
+  if (numberOfPeople > 0) updateData.numberOfPeople = numberOfPeople;
 
   try {
     await prisma.event.update({
       where: { id: eventId },
-      data: eventData,
+      data: {
+        title: title,
+        slug: slug,
+        ...updateData,
+        eventImageId: eventImageId,
+        eventCertificateId: eventCertificateId,
+      },
     });
   } catch (error) {
     console.error("Error updating event:", error);
     throw new Error("Failed to update event.");
   }
 
-  redirect(`/event/${eventData.slug}`);
+  redirect(`/event/${slug}`);
 };

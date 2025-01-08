@@ -34,7 +34,7 @@ export const registerEvent = async (
     });
     eventRegistrationId = data.id;
 
-    createReportSubmission(eventId, userId);
+    createReportSubmission(eventId, userId, data.id);
 
     const user = await prisma.user.findUnique({
       where: { id: userId },

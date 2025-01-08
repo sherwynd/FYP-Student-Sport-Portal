@@ -79,7 +79,7 @@ export default async function Home() {
       {beginnerEvents.length > 0 && (
         <section className="py-4">
           <h1 className="mb-6 text-center text-4xl font-bold text-gray-800">
-            Beginner Courses
+            Beginner Level
           </h1>
           <ul className="grid w-full max-w-[1440px] gap-6 px-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {beginnerEvents.map((event) => (
@@ -95,7 +95,7 @@ export default async function Home() {
       {intermediateEvents.length > 0 && (
         <section className="py-4">
           <h1 className="mb-6 text-center text-4xl font-bold text-gray-800">
-            Intermediate Courses
+            Intermediate Level
           </h1>
           <ul className="grid w-full max-w-[1440px] gap-6 px-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {intermediateEvents.map((event) => (
@@ -111,7 +111,7 @@ export default async function Home() {
       {professionalEvents.length > 0 && (
         <section className="py-4">
           <h1 className="mb-6 text-center text-4xl font-bold text-gray-800">
-            Professional Courses
+            Professional Level
           </h1>
           <ul className="grid w-full max-w-[1440px] gap-6 px-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {professionalEvents.map((event) => (

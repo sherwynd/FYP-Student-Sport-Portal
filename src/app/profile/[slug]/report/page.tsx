@@ -12,26 +12,42 @@ const UserReport = async ({ params }: ParamProps) => {
       slug: (await params).slug,
     },
   });
-  const reportSubmissionData = await prisma.reportSubmission.findMany({
+
+  const eventRegistrationData = await prisma.eventRegistration.findMany({
     where: {
-      userId: userData?.id as string,
+      userId: userData?.id,
     },
-    include: {
-      eventRegistration: {
+    select: {
+      id: true, // Include the id
+      event: {
         select: {
-          user: {
-            select: {
-              slug: true,
-            },
-          },
-          event: {
-            select: {
-              title: true,
-            },
-          },
+          title: true,
         },
       },
     },
+  });
+
+  const reportSubmissionData = await prisma.reportSubmission.findMany({
+    where: {
+      userId: userData?.id,
+    },
+  });
+
+  const fixedData = reportSubmissionData.map((report) => {
+    // Find corresponding event registration for the report
+    const eventRegistration = eventRegistrationData.find(
+      (registration) => registration.id === report.eventRegistrationId,
+    );
+
+    return {
+      id: report.id,
+      eventRegistrationId: report.eventRegistrationId,
+      userId: userData?.id,
+      userSlug: userData?.slug,
+      eventTitle: eventRegistration?.event.title, // Fallback if title is missing
+      status: report.status,
+      submittedAt: report.submittedAt, // Optional, include other fields if needed
+    };
   });
 
   return (
@@ -41,7 +57,7 @@ const UserReport = async ({ params }: ParamProps) => {
         <DataTable
           filter={"none"}
           columns={UserReportSubmissionColumns}
-          data={reportSubmissionData}
+          data={fixedData}
         />
       </div>
     </div>

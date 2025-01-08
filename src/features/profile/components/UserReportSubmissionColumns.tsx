@@ -17,26 +17,19 @@ import Link from "next/link";
 
 type UserReportSubmissionData = {
   id: string;
-  status: string;
-  SubmittedAt?: Date | null;
   eventRegistrationId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  eventRegistration: {
-    user: {
-      slug: String;
-    };
-    event: {
-      title: string;
-    };
-  };
+  userId: string | undefined;
+  userSlug: string | undefined;
+  eventTitle: string | undefined;
+  status: string;
+  submittedAt: Date | null;
 };
 
 export const UserReportSubmissionColumns: ColumnDef<UserReportSubmissionData>[] =
   [
     //Data Accessors
     {
-      accessorKey: "eventRegistration.event.title",
+      accessorKey: "eventTitle",
       //Sorting
       header: ({ column }) => {
         return (
@@ -78,7 +71,7 @@ export const UserReportSubmissionColumns: ColumnDef<UserReportSubmissionData>[] 
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <Link
-                href={`/profile/${row.original.eventRegistration.user.slug}/report/${row.original.id}`}
+                href={`/profile/${row.original.userSlug}/report/${row.original.id}`}
               >
                 <Button variant="ghost">Submit Report</Button>
               </Link>

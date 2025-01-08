@@ -38,7 +38,7 @@ const EventId = async ({ params }: ParamProps) => {
           />
         ) : (
           <Image
-            src="/default-event-template.jpg"
+            src="/ISN.png"
             width={800}
             height={200}
             alt="Picture of the event image"

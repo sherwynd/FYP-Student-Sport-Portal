@@ -16,9 +16,28 @@ export const deleteEvent = async (eventId: string) => {
   }
 
   try {
+    // Delete report submissions associated with the event
+    await prisma.reportSubmission.deleteMany({
+      where: { eventId },
+    });
+
     if (event.eventRegistrations.length > 0) {
       await prisma.eventRegistration.deleteMany({
         where: { eventId: eventId },
+      });
+    }
+
+    // Delete associated event image
+    if (event.eventImageId) {
+      await prisma.eventImage.delete({
+        where: { id: event.eventImageId },
+      });
+    }
+
+    // Delete associated event certificate
+    if (event.eventCertificateId) {
+      await prisma.eventCertificate.delete({
+        where: { id: event.eventCertificateId },
       });
     }
 

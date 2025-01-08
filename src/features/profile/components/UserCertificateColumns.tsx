@@ -65,8 +65,6 @@ export const UserCertificateColumns: ColumnDef<UserCertificateData>[] = [
                   return;
                 }
 
-                console.log("Downloading:", filename, "from URL:", downloadUrl);
-
                 try {
                   const link = document.createElement("a");
                   link.href = downloadUrl; // Use the base64 data URL

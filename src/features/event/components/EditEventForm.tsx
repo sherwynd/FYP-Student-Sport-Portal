@@ -7,7 +7,7 @@ import { SelectField } from "@/components/common/SelectField";
 import { Button } from "@/components/ui/button";
 import DragAndDropImage from "@/components/common/DragAndDropImage";
 import UploadFile from "@/components/common/UploadFile";
-import { addEvent } from "../servers/createEventAction";
+import { editEvent } from "../servers/editEventAction";
 
 type EventFormProps = {
   actionType: "Create" | "Edit";
@@ -26,8 +26,8 @@ type EventFormProps = {
   };
 };
 
-const EventForm = ({ actionType, initialData }: EventFormProps) => {
-  const [data, action, _isPending] = useActionState(addEvent, undefined);
+const EditEventForm = ({ actionType, initialData }: EventFormProps) => {
+  const [data, action, _isPending] = useActionState(editEvent, undefined);
   const [requireService, setRequireService] = useState(false);
 
   return (
@@ -65,7 +65,6 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
               { value: "intermediate", label: "Intermediate" },
               { value: "professional", label: "Professional" },
             ]}
-            error={data?.courseLevelError}
           />
           <SelectField
             label="Event Type"
@@ -75,7 +74,6 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
               { value: "workshop", label: "Workshop" },
               { value: "competition", label: "Competition" },
             ]}
-            error={data?.eventTypeError}
           />
           <FormField
             label="Credit Hour"
@@ -83,12 +81,7 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
             name="creditHour"
             error={data?.creditHourError}
           />
-          <UploadFile
-            label="Certificate"
-            limitSize={5}
-            name="certificate"
-            error={data?.certificateError}
-          />
+          <UploadFile label="Certificate" limitSize={5} name="certificate" />
           {/* Checkbox for Require Service */}
           <div className="flex items-center space-x-2">
             <Checkbox
@@ -126,4 +119,4 @@ const EventForm = ({ actionType, initialData }: EventFormProps) => {
   );
 };
 
-export default EventForm;
+export default EditEventForm;

@@ -178,6 +178,21 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
                       </NavigationMenuLink>
                     </Link>
                   </NavigationMenuItem>
+                  {currentUser?.role === "admin" && (
+                    <NavigationMenuItem>
+                      <Link
+                        href={`/profile/${slug}/service`}
+                        legacyBehavior
+                        passHref
+                      >
+                        <NavigationMenuLink
+                          className={navigationMenuTriggerStyle()}
+                        >
+                          Service
+                        </NavigationMenuLink>
+                      </Link>
+                    </NavigationMenuItem>
+                  )}
                 </NavigationMenuList>
               </NavigationMenu>
             </div>
