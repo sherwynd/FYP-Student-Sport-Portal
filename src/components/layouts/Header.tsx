@@ -18,7 +18,7 @@ export default async function Header() {
             className="m-2"
             priority={true}
           />
-          <h1 className="text-xl font-bold text-white">Student Sport Portal</h1>
+          <h1 className="text-xl font-bold text-white">SKS Portal</h1>
         </div>
         <div className="flex items-center space-x-4">
           {session ? (

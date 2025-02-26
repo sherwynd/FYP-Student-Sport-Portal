@@ -63,7 +63,7 @@ export default async function Admin() {
   const userData = await prisma.user.findMany();
   return (
     <main className="admin-main flex flex-col items-center justify-center px-4 py-6">
-      {/* 3 Stats Containers */}
+      {/* 2 Stats Containers */}
       <div className="my-4 flex w-full max-w-7xl gap-4">
         <div className="stat-card flex w-1/2 flex-col items-center justify-center rounded-lg bg-white p-6 shadow-md">
           <h3 className="text-xl font-semibold">Active Users</h3>

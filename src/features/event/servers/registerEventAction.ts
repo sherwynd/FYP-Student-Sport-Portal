@@ -11,13 +11,16 @@ export const registerEvent = async (
   const eventId = formData.get("eventId") as string;
   const participationType = formData.get("participationType") as string;
 
-  const existingRegistration = await prisma.eventRegistration.findFirst({
-    where: {
-      eventId,
+  const existingRegistrationFromSelf = await prisma.eventRegistration.findFirst(
+    {
+      where: {
+        eventId,
+        userId,
+      },
     },
-  });
+  );
 
-  if (existingRegistration) {
+  if (existingRegistrationFromSelf) {
     return {
       error: "User already registered for this event.",
     };

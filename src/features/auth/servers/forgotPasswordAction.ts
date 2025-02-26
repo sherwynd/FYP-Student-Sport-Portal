@@ -43,7 +43,7 @@ export const forgotPassword = async (
     },
   );
 
-  const resetLink = `${process.env.NEXT_PUBLIC_BASE_URL}/auth/resetPassword/${resetToken}`;
+  const resetLink = `${process.env.RESET_PASSWORD_URL}/auth/resetPassword/${resetToken}`;
 
   await transporter.sendMail({
     from: process.env.EMAIL_USER!,

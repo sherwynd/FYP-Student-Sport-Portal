@@ -59,7 +59,7 @@ export const register = async (_previousState: unknown, formData: FormData) => {
       };
     }
 
-    if (matchUser) {
+    if (matchUser?.email === email) {
       return {
         emailError: `${email} already exist!`,
         fieldData: { name, email, password, role },

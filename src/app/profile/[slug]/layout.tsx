@@ -139,7 +139,7 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
                       </NavigationMenuLink>
                     </Link>
                   </NavigationMenuItem>
-                  <NavigationMenuItem>
+                  {/* <NavigationMenuItem>
                     <Link
                       href={`/profile/${slug}/dashboard`}
                       legacyBehavior
@@ -151,7 +151,7 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = async ({
                         Dashboard
                       </NavigationMenuLink>
                     </Link>
-                  </NavigationMenuItem>
+                  </NavigationMenuItem> */}
                   <NavigationMenuItem>
                     <Link
                       href={`/profile/${slug}/certificate`}

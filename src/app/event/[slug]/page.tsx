@@ -48,7 +48,7 @@ const EventId = async ({ params }: ParamProps) => {
       </div>
 
       {/* Admin Actions */}
-      {(currentUser?.role === "admin" || "organizer") && (
+      {(currentUser?.role === "admin" || currentUser?.role === "organizer") && (
         <div className="flex w-full max-w-4xl justify-between px-4 py-6">
           <Link href={`/event/editEvent/${eventIdData?.id}`}>
             <button className="rounded bg-green-500 px-4 py-2 text-white transition hover:bg-green-600">
@@ -61,7 +61,7 @@ const EventId = async ({ params }: ParamProps) => {
 
       {/* Title & Description */}
       <div className="w-full max-w-4xl px-4 pb-6">
-        <h1 className="text-2xl font-bold text-gray-800">
+        <h1 className="mt-6 text-2xl font-bold text-gray-800">
           {eventIdData?.title}
         </h1>
         <p className="mt-2 text-gray-600">{eventIdData?.description}</p>
