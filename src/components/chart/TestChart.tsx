@@ -11,14 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  { value: 12, label: "time 1" },
-  { value: 15, label: "time 2" },
-  { value: 16, label: "time 3" },
-  { value: 18, label: "time 4" },
-];
-
-export default function TestChart() {
+export default function TestChart({ data }: { data: any[] }) {
   return (
     <ResponsiveContainer width="100%" minHeight={300}>
       <LineChart width={500} height={300} data={data}>
@@ -27,7 +20,12 @@ export default function TestChart() {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line dataKey="value" />
+        <Line
+          type="monotone"
+          dataKey="value"
+          stroke="#8884d8"
+          activeDot={{ r: 8 }}
+        />
       </LineChart>
     </ResponsiveContainer>
   );

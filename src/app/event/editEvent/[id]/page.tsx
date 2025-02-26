@@ -1,4 +1,4 @@
-import EventForm from "@features/event/components/EventForm";
+import EditEventForm from "@features/event/components/EditEventForm";
 import prisma from "@/databases/db";
 
 type ParamProps = {
@@ -33,7 +33,7 @@ const EditEvent = async ({ params }: ParamProps) => {
     );
   }
 
-  return <EventForm actionType="Edit" initialData={eventIdData} />;
+  return <EditEventForm actionType="Edit" initialData={eventIdData} />;
 };
 
 export default EditEvent;

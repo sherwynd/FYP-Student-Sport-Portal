@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-
 import { Pie, ResponsiveContainer, PieChart, Tooltip, Legend } from "recharts";
 
 type TData = {
@@ -9,7 +8,7 @@ type TData = {
   fill: string;
 };
 
-// Create a reusable PieChart component that can handle dynamic data
+// Reusable PieChart component
 const RechartPieChart = ({
   value,
   title,
@@ -17,7 +16,7 @@ const RechartPieChart = ({
   value: number;
   title: string;
 }) => {
-  // Create the dynamic data for the pie chart (e.g., 80 for the filled part, 100 - value for the remaining)
+  // Define data for the pie chart
   const data: TData[] = [
     {
       name: title,
@@ -31,9 +30,26 @@ const RechartPieChart = ({
     },
   ];
 
+  // Custom label function for the pie chart
+  const renderCustomLabel = ({
+    name,
+    value,
+    fill,
+  }: {
+    name: string;
+    value: number;
+    fill: string;
+  }) => {
+    // Show the label only for the blue portion
+    if (fill === "#75bfec") {
+      return `${value}`; // Show the value for the blue portion
+    }
+    return null; // Hide label for the gray portion
+  };
+
   return (
     <ResponsiveContainer width={300} height={300}>
-      <PieChart width={100} height={100} data={data}>
+      <PieChart>
         <Legend verticalAlign="top" height={10} />
         <Tooltip />
         <Pie
@@ -42,11 +58,12 @@ const RechartPieChart = ({
           nameKey="name"
           cx="50%"
           cy="50%"
-          startAngle={90} // Start at the top (12 o'clock)
+          startAngle={90} // Start at 12 o'clock
           endAngle={450} // Full circle
           innerRadius={60}
           outerRadius={80}
-          label
+          label={renderCustomLabel} // Use the custom label function
+          labelLine={false} // Remove lines connecting labels to slices
         />
       </PieChart>
     </ResponsiveContainer>

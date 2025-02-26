@@ -18,6 +18,10 @@ type EventCardProps = {
   };
 };
 
+function truncateText(text: string, maxLength: number) {
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+}
+
 export default function EventCard({ event }: EventCardProps) {
   return (
     <>
@@ -35,7 +39,7 @@ export default function EventCard({ event }: EventCardProps) {
               />
             ) : (
               <Image
-                src="/default-event-template.jpg"
+                src="/ISN.png"
                 width={800}
                 height={200}
                 alt="Picture of the event image"
@@ -44,9 +48,13 @@ export default function EventCard({ event }: EventCardProps) {
             )}
 
             <div className="p-6">
-              <h2 className="mb-2 text-lg font-bold">{event.title}</h2>
+              <h2 className="mb-2 text-lg font-bold">
+                {event.title ? truncateText(event.title, 25) : ""}
+              </h2>
               <p className="mb-4 text-sm text-gray-700">
-                {event.eventCertificate?.filename}
+                {event.eventCertificate
+                  ? truncateText(event.eventCertificate.filename, 30)
+                  : ""}
               </p>
               <p className="text-sm text-gray-500">
                 Credit Hour: {event.creditHour}

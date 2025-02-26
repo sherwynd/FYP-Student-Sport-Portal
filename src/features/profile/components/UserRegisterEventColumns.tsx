@@ -1,21 +1,18 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 type UserRegisterEventData = {
   id: string;
   userId: string;
@@ -35,28 +32,6 @@ type UserRegisterEventData = {
 
 export const UserRegisterEventColumns: ColumnDef<UserRegisterEventData>[] = [
   // Row Selection
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
 
   //Data Accessors
   {
@@ -102,12 +77,12 @@ export const UserRegisterEventColumns: ColumnDef<UserRegisterEventData>[] = [
       );
     },
   },
-
   // Data Action
   {
     id: "actions",
     cell: ({ row }) => {
-      const adminEvent = row.original;
+      const router = useRouter();
+      const eventRegistered = row.original;
 
       return (
         <DropdownMenu>
@@ -120,13 +95,12 @@ export const UserRegisterEventColumns: ColumnDef<UserRegisterEventData>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(adminEvent.id)}
+              onClick={() =>
+                router.push(`/event/${eventRegistered.event.slug}`)
+              }
             >
-              Copy Admin Event ID
+              View Event
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

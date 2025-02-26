@@ -10,9 +10,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
+  // DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -86,17 +87,19 @@ export const AdminUserDataColumns: ColumnDef<AdminUserData>[] = [
     },
   },
   {
-    accessorKey: "activeStatus",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+    accessorKey: "isActive",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Status
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+    cell: ({ getValue }) => {
+      const isActive = getValue();
+      return isActive ? "Active" : "Inactive";
     },
   },
   {
@@ -118,12 +121,12 @@ export const AdminUserDataColumns: ColumnDef<AdminUserData>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const adminEvent = row.original;
-
+      const router = useRouter();
+      const adminUser = row.original;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button variant="ghost" className="h-8 w-4 p-0">
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
@@ -131,13 +134,15 @@ export const AdminUserDataColumns: ColumnDef<AdminUserData>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(adminEvent.id)}
+              onClick={() => router.push(`/admin/editProfile/${adminUser.id}`)}
             >
-              Copy Admin Event ID
+              Edit
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => router.push(`/profile/${adminUser.slug}`)}
+            >
+              View
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

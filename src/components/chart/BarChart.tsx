@@ -12,14 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  { value: 12, label: "time 1" },
-  { value: 15, label: "time 2" },
-  { value: 16, label: "time 3" },
-  { value: 18, label: "time 4" },
-];
-
-export const RechartBarChart = () => {
+export const RechartBarChart = ({ data }: { data: any[] }) => {
   return (
     <ResponsiveContainer width="100%" minHeight={300}>
       <BarChart width={500} height={300} data={data}>
@@ -28,7 +21,7 @@ export const RechartBarChart = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="value" fill="#8884d8" />
+        <Bar dataKey="eventCreated" fill="#8884d8" />
       </BarChart>
     </ResponsiveContainer>
   );

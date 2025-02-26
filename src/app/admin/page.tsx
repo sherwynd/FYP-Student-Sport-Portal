@@ -1,10 +1,8 @@
-// import { auth } from "@/auth";
-// import { redirect } from "next/navigation";
 import prisma from "@/databases/db";
-import TestChart from "@/components/chart/TestChart";
 import { DataTable } from "@/components/ui/DataTable";
 import { AdminEventDataColumns } from "@/features/admin/components/AdminEventTableColumns";
 import { AdminUserDataColumns } from "@/features/admin/components/AdminUserTableColumns";
+import { RechartBarChart } from "@/components/chart/BarChart";
 
 export default async function Admin() {
   const activeUsers = await prisma.user.count({
@@ -41,10 +39,31 @@ export default async function Admin() {
       },
     },
   });
+
+  const rawEvents = await prisma.event.findMany({
+    select: {
+      createdAt: true,
+    },
+  });
+
+  const groupedData = rawEvents.reduce(
+    (acc, event) => {
+      const date = event.createdAt.toISOString().split("T")[0];
+      acc[date] = (acc[date] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+
+  const chartData = Object.entries(groupedData).map(([date, count]) => ({
+    label: date,
+    eventCreated: count,
+  }));
+
   const userData = await prisma.user.findMany();
   return (
     <main className="admin-main flex flex-col items-center justify-center px-4 py-6">
-      {/* 3 Stats Containers */}
+      {/* 2 Stats Containers */}
       <div className="my-4 flex w-full max-w-7xl gap-4">
         <div className="stat-card flex w-1/2 flex-col items-center justify-center rounded-lg bg-white p-6 shadow-md">
           <h3 className="text-xl font-semibold">Active Users</h3>
@@ -89,7 +108,7 @@ export default async function Admin() {
       <div className="chart-table-container my-2 w-full max-w-7xl overflow-auto">
         {/* Data Table */}
         <div className="chart-table rounded-lg border border-gray-200 bg-white p-4 shadow-md">
-          <TestChart />
+          <RechartBarChart data={chartData} />
         </div>
       </div>
     </main>

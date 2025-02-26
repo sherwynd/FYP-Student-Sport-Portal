@@ -4,6 +4,9 @@ export default function ForgotPassword() {
   return (
     <AuthForm>
       <ForgotPasswordForm />
+
+      {/* Login Link */}
+
       <section className="my-4">
         <div className="my-1 text-center">
           <p className="text-sm text-gray-600">

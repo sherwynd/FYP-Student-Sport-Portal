@@ -23,62 +23,58 @@ const UserCertificate = async ({ params }: ParamProps) => {
           eventCertificate: true, // Include the event certificate data
         },
       },
-      reportSubmission: true, // Include report submission status to check if it's submitted
     },
   });
 
-  const getCertificateDownloadUrl = (
-    certificateData: Buffer,
-    contentType: string,
-  ) => {
-    if (!certificateData || certificateData.length === 0) {
-      console.error("Invalid certificate data: Empty or undefined");
-    }
+  const reportSubmissionData = await prisma.reportSubmission.findMany({
+    where: {
+      userId: userData?.id as string,
+      status: "Submitted", // Only include submitted reports
+    },
+  });
 
-    const base64Data = certificateData.toString("base64");
-    const downloadUrl = `data:${contentType};base64,${base64Data}`;
+  // const getCertificateDownloadUrl = (
+  //   certificateData: Buffer,
+  //   contentType: string,
+  // ) => {
+  //   if (!certificateData || certificateData.length === 0) {
+  //     console.error("Invalid certificate data: Empty or undefined");
+  //   }
 
-    // console.log("Generated Download URL:", downloadUrl);
-
-    // const blob = new Blob([certificateData], { type: contentType }); // Create Blob with the content type
-    // const blobUrl = URL.createObjectURL(blob); // Generate Blob URL
-    // console.log("Generated Blob URL:", blobUrl); // Log the Blob URL for debugging
-    return downloadUrl;
-  };
+  //   const base64Data = certificateData.toString("base64");
+  //   const downloadUrl = `data:${contentType};base64,${base64Data}`;
+  //   return downloadUrl;
+  // };
 
   const certificateThatSubmittedReportData = eventRegistrationData
-    .filter(
-      (registration) => registration.reportSubmission?.status === "Submitted",
-    ) // Only process those who submitted reports
+    .filter((registration) => {
+      // Check if there's a matching report submission for this eventRegistration
+      return reportSubmissionData.some(
+        (report) => report.eventRegistrationId === registration.id,
+      );
+    })
     .map((registration) => {
-      const event = registration.event; // Access the event object within each registration
-      if (event) {
+      const event = registration.event;
+
+      if (event && event.eventCertificate) {
         const eventCertificate = event.eventCertificate;
 
-        // Check if there is a certificate and if the report is submitted
-        if (eventCertificate) {
-          // Create a new certificate data object for the table
-          const certificateData = eventCertificate.data; // This is the Buffer containing PDF binary data
-          const certificateUrl = getCertificateDownloadUrl(
-            certificateData,
-            eventCertificate.contentType,
-          );
+        // Generate download URL for the certificate
+        const base64Data = eventCertificate.data.toString("base64");
+        const downloadUrl = `data:${eventCertificate.contentType};base64,${base64Data}`;
 
-          return {
-            id: eventCertificate.id,
-            filename: eventCertificate.filename,
-            contentType: eventCertificate.contentType,
-            downloadUrl: certificateUrl, // Convert certificate data to base64 for download
-          };
-        } else {
-          console.log("No certificate available for this event.");
-          return null; // If no certificate, return null
-        }
-      } else {
-        return null; // If no event, return null
+        return {
+          id: eventCertificate.id,
+          filename: eventCertificate.filename,
+          contentType: eventCertificate.contentType,
+          downloadUrl,
+        };
       }
+
+      return null; // Return null if no certificate is available
     })
-    .filter((certificate) => certificate !== null); // Remove any null values (if there were no certificate for that event)
+    .filter((certificate) => certificate !== null); // Remove null values
+
   return (
     <div className="certificate-data-table-container my-2 w-full max-w-7xl overflow-auto">
       {/* Certificate User Data Table */}

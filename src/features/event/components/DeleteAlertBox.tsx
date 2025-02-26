@@ -11,8 +11,23 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { deleteEvent } from "../servers/deleteEventAction";
+import { useRouter } from "next/navigation";
 
 export default function DeleteAlertBox({ id }: { id: string }) {
+  const router = useRouter();
+
+  const handleDelete = async () => {
+    try {
+      const result = await deleteEvent(id);
+      if (result.success) {
+        router.push("/event"); // Navigate to the events list
+      }
+    } catch (error) {
+      console.error("Failed to delete event:", error);
+      // Optionally show an error message to the user
+    }
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -33,7 +48,7 @@ export default function DeleteAlertBox({ id }: { id: string }) {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction
-            onClick={() => deleteEvent(id)}
+            onClick={handleDelete}
             className="bg-red-500 text-white hover:bg-red-600"
           >
             Delete
