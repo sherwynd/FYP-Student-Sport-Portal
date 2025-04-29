@@ -32,7 +32,6 @@ const RechartPieChart = ({
 
   // Custom label function for the pie chart
   const renderCustomLabel = ({
-    name,
     value,
     fill,
   }: {
