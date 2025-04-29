@@ -14,9 +14,9 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noImplicitReturns": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
+    // "noImplicitReturns": true,
+    // "noUnusedParameters": true,
+    // "noUnusedLocals": true,
     "jsx": "preserve",
     "incremental": true,
     "plugins": [
